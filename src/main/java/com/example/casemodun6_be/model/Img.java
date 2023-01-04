@@ -13,6 +13,4 @@ public class Img {
 
     private String img;
 
-    @ManyToOne
-    private DetailAccount detailAccount;
 }
