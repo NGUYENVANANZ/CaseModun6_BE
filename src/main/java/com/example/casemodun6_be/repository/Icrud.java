@@ -1,4 +1,4 @@
-package com.example.casemodun6_be.service;
+package com.example.casemodun6_be.repository;
 
 import java.util.List;
 

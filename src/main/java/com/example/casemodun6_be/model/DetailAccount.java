@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class DetailAccount {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String city;
@@ -25,6 +25,8 @@ public class DetailAccount {
 
     private String fullName;
     private LocalDate birthday;
+    private LocalDate joinDate;
+
     private String gender;
     private String img;
 
