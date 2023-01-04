@@ -18,10 +18,6 @@ public class Account {
     private String email;
     private String phoneNumber;
 
-    private String fullName;
-    private LocalDate birthday;
-    private String gender;
-    private String img;
     private long money;
 
     private LocalDate joinDate;

@@ -23,6 +23,12 @@ public class DetailAccount {
     private String moTa;
     private String yeuCau;
 
+
+    private String fullName;
+    private LocalDate birthday;
+    private String gender;
+    private String img;
+
     private String pricePerDay;
 
     private String faceLink;

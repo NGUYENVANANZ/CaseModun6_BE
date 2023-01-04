@@ -19,5 +19,5 @@ public class Comment {
     private Account accounts;
 
     @ManyToOne
-    private Account accounts1;
+    private DetailAccount detailAccount;
 }
