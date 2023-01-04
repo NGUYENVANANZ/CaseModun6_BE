@@ -33,5 +33,6 @@ public class DetailAccount {
 
     private String faceLink;
 
+    private boolean status;
 
 }
