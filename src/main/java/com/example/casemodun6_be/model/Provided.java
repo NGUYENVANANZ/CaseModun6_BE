@@ -13,6 +13,4 @@ public class Provided {
 
     private String provided;
 
-    @ManyToOne
-    private DetailAccount detailAccount;
 }

@@ -23,6 +23,12 @@ public class DetailAccount {
     private String moTa;
     private String yeuCau;
 
+    @OneToMany
+    private List<Img> imgs;
+
+    @OneToMany
+    private List<Provided> provideds;
+
     private String pricePerDay;
 
     private String faceLink;
