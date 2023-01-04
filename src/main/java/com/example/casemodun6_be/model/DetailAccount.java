@@ -23,19 +23,17 @@ public class DetailAccount {
     private String moTa;
     private String yeuCau;
 
-<<<<<<< HEAD
-
     private String fullName;
     private LocalDate birthday;
     private String gender;
     private String img;
-=======
+
     @OneToMany
     private List<Img> imgs;
 
     @OneToMany
     private List<Provided> provideds;
->>>>>>> 9032ac16961c18f187ea3fd5975b60d6c68cb022
+
 
     private String pricePerDay;
 
