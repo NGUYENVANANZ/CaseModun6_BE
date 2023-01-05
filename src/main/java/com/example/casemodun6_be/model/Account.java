@@ -19,6 +19,7 @@ public class Account {
     private String phoneNumber;
 
     private long money;
+    private String gender;
 
     @OneToOne
     private DetailAccount detailAccount;

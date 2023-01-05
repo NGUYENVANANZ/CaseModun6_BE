@@ -15,9 +15,4 @@ public class Comment {
     private long star;
     private String text;
 
-    @ManyToOne
-    private Account accounts;
-
-    @ManyToOne
-    private DetailAccount detailAccount;
 }
