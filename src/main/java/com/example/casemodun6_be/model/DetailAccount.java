@@ -27,7 +27,6 @@ public class DetailAccount {
     private LocalDate birthday;
     private LocalDate joinDate;
 
-    private String gender;
     private String img;
 
     @OneToMany
@@ -37,10 +36,13 @@ public class DetailAccount {
     private List<Provided> provideds;
 
 
-    private String pricePerDay;
+    private long pricePerDay;
 
     private String faceLink;
 
     private boolean status;
 
+    public boolean isStatus() {
+        return status;
+    }
 }
