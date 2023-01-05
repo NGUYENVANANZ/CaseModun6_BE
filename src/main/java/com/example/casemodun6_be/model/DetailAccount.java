@@ -16,6 +16,8 @@ public class DetailAccount {
     private String city;
     private String nation;
 
+    private String gender;
+
     private double height;
     private double weight;
 
@@ -35,12 +37,16 @@ public class DetailAccount {
     @OneToMany
     private List<Provided> provideds;
 
+    @OneToMany
+    private List<Comment> comments;
 
     private long pricePerDay;
 
     private String faceLink;
 
     private boolean status;
+
+    private boolean vip;
 
     public boolean isStatus() {
         return status;
