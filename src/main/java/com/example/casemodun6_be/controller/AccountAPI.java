@@ -57,15 +57,15 @@ public class AccountAPI {
 
     @GetMapping("/newbie")
     public ResponseEntity<List<DetailAccountSart>> showNewbie() {
-        List<DetailAccountSart> detailAccounts = detailAccount.showNewbie();
-        return new ResponseEntity<>( detailAccounts, HttpStatus.OK);
+        List<DetailAccountSart> detailAccountSarts = detailAccount.showNewbie();
+        return new ResponseEntity<>( detailAccountSarts, HttpStatus.OK);
     }
 
 
     @GetMapping("/vip")
     public ResponseEntity<List<DetailAccountSart>> showVip() {
-        List<DetailAccountSart> detailAccounts = detailAccount.showVip();
-        return new ResponseEntity<>( detailAccounts, HttpStatus.OK);
+        List<DetailAccountSart> detailAccountSarts = detailAccount.showVip();
+        return new ResponseEntity<>( detailAccountSarts, HttpStatus.OK);
     }
 
     @GetMapping("/gender")
@@ -76,7 +76,7 @@ public class AccountAPI {
         return new ResponseEntity<>(detailAccountSarts ,HttpStatus.OK);
     }
 
-    @GetMapping("/sart")
+    @GetMapping("/star")
     public ResponseEntity<List<Sart>> showSart(){
         List<Sart> sarts = detailAccount.showSart();
         return new ResponseEntity<>(sarts ,HttpStatus.OK);

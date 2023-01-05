@@ -13,7 +13,7 @@ public interface DetailAccountRepo extends CrudRepository<DetailAccount, Long> {
     @Query(nativeQuery = true,value = "SELECT * FROM detail_account where status = 1 ORDER BY join_date DESC LIMIT 12")
     List<DetailAccount> findDetailNewbie();
 
-    @Query(nativeQuery = true,value = "SELECT * FROM detail_account where vip = 1 and status = 1 ORDER BY join_date DESC LIMIT 6")
+    @Query(nativeQuery = true,value = "SELECT * FROM detail_account where vip = 1 and status = 1 ORDER BY join_date DESC LIMIT 12")
     List<DetailAccount> findDetailVip();
 
     @Query(nativeQuery = true,value = "SELECT * FROM detail_account where status = 1")
