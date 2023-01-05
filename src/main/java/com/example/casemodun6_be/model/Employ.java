@@ -16,4 +16,5 @@ public class Employ {
 
     @ManyToOne
     private DetailAccount detailAccount;
+
 }

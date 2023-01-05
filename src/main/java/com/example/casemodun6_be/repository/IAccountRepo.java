@@ -1,7 +1,6 @@
 package com.example.casemodun6_be.repository;
 
 
-
 import com.example.casemodun6_be.model.Account;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
