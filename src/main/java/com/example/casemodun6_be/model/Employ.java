@@ -17,4 +17,37 @@ public class Employ {
     @ManyToOne
     private DetailAccount detailAccount;
 
+    private long hires;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public DetailAccount getDetailAccount() {
+        return detailAccount;
+    }
+
+    public void setDetailAccount(DetailAccount detailAccount) {
+        this.detailAccount = detailAccount;
+    }
+
+    public long getHires() {
+        return hires;
+    }
+
+    public void setHires(long hires) {
+        this.hires = hires;
+    }
 }
