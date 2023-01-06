@@ -28,6 +28,7 @@ import java.util.List;
 @RestController
 @CrossOrigin("*")
 public class AccountAPI {
+
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -60,15 +61,15 @@ public class AccountAPI {
 
     @GetMapping("/newbie")
     public ResponseEntity<List<DetailAccountSart>> showNewbie() {
-        List<DetailAccountSart> detailAccounts = detailAccount.showNewbie();
-        return new ResponseEntity<>( detailAccounts, HttpStatus.OK);
+        List<DetailAccountSart> detailAccountSarts = detailAccount.showNewbie();
+        return new ResponseEntity<>( detailAccountSarts, HttpStatus.OK);
     }
 
 
     @GetMapping("/vip")
     public ResponseEntity<List<DetailAccountSart>> showVip() {
-        List<DetailAccountSart> detailAccounts = detailAccount.showVip();
-        return new ResponseEntity<>( detailAccounts, HttpStatus.OK);
+        List<DetailAccountSart> detailAccountSarts = detailAccount.showVip();
+        return new ResponseEntity<>( detailAccountSarts, HttpStatus.OK);
     }
 
     @GetMapping("/gender")

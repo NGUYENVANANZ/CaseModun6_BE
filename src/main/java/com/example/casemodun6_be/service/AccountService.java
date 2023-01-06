@@ -38,6 +38,9 @@ public class AccountService implements UserDetailsService {
     public Account findbysdt(String phoneNumber) {
         return iAccountRepo.findByPhoneNumber(phoneNumber);
     }
+    public Account finbyid(long id) {
+        return iAccountRepo.findById(id);
+    }
 
 
 }

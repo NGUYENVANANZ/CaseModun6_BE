@@ -98,7 +98,7 @@ public class DeatailAccountService {
             }
         });
 
-        if (hires.size() > 13) {
+        if (hires.size() > 6) {
             List<Hires> hires1 = new ArrayList<>();
             for (int i = 0; i < 12; i++) {
                 hires1.add(hires.get(i));
@@ -141,6 +141,7 @@ public class DeatailAccountService {
             detailAccount.setImg(d.getImg());
             List<Provided> provideds = provideds(d.getProvideds());
             detailAccount.setProvideds(provideds);
+            detailAccount.setPrice(d.getPricePerDay());
             detailAccounts.add(detailAccount);
         }
         return detailAccounts;
