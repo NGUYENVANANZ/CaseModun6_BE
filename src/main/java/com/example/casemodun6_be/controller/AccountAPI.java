@@ -10,6 +10,7 @@ import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.DeatailAccountService;
 import com.example.casemodun6_be.service.JwtService;
+import com.example.casemodun6_be.service.search.IAccountServiceSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,9 @@ public class AccountAPI {
 
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    IAccountServiceSearch iAccountServiceSearch;
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Account account) {
@@ -89,5 +93,9 @@ public class AccountAPI {
         return new ResponseEntity<>(hires ,HttpStatus.OK);
     }
 
-
+    @GetMapping("/showAll")
+    public ResponseEntity<List<DetailAccount>> showAll(){
+        List<DetailAccount> detailAccountList = iAccountServiceSearch.getAll();
+        return new ResponseEntity<>(detailAccountList,HttpStatus.OK);
+    }
 }
