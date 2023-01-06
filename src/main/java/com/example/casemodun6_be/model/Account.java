@@ -24,7 +24,7 @@ public class Account {
     @OneToOne
     private DetailAccount detailAccount;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Roles> roles;
 
     private boolean status;
