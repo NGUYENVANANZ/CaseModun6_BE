@@ -37,7 +37,7 @@ public class DetailAccount {
     @OneToMany
     private List<Provided> provideds;
 
-    @OneToMany
+    @ManyToMany
     private List<Comment> comments;
 
     private long pricePerDay;
