@@ -7,6 +7,7 @@ import com.example.casemodun6_be.model.DTO.Sart;
 import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.model.Employ;
 import com.example.casemodun6_be.model.Provided;
+import com.example.casemodun6_be.model.Roles;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.repository.EmployRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,25 @@ public class DeatailAccountService {
 
     public List<DetailAccountSart> showNewbie() {
         List<DetailAccountSart> detailAccounts = detailAccounts(detailAccountRepo.findDetailNewbie());
+        if (detailAccounts.size() > 12) {
+            List<DetailAccountSart> detailAccounts1 = new ArrayList<>();
+            for (int i = 0; i < 12; i++) {
+                detailAccounts1.add(detailAccounts.get(i));
+            }
+            return detailAccounts1;
+        }
         return detailAccounts;
     }
 
     public List<DetailAccountSart> showVip() {
         List<DetailAccountSart> detailAccounts = detailAccounts(detailAccountRepo.findDetailVip());
+        if (detailAccounts.size() > 12) {
+            List<DetailAccountSart> detailAccounts1 = new ArrayList<>();
+            for (int i = 0; i < 12; i++) {
+                detailAccounts1.add(detailAccounts.get(i));
+            }
+            return detailAccounts1;
+        }
         return detailAccounts;
     }
 
@@ -45,7 +60,7 @@ public class DeatailAccountService {
 
         if (detailAccounts.size() > 12) {
             List<DetailAccountSart> detailAccounts1 = new ArrayList<>();
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 12; i++) {
                 detailAccounts1.add(detailAccounts.get(i));
             }
             return detailAccounts1;
@@ -69,7 +84,7 @@ public class DeatailAccountService {
 
         if (sarts.size() > 6) {
             List<Sart> sarts1 = new ArrayList<>();
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 6; i++) {
                 sarts1.add(sarts.get(i));
             }
             return sarts1;
@@ -100,7 +115,7 @@ public class DeatailAccountService {
 
         if (hires.size() > 6) {
             List<Hires> hires1 = new ArrayList<>();
-            for (int i = 0; i < 12; i++) {
+            for (int i = 0; i < 6; i++) {
                 hires1.add(hires.get(i));
             }
             return hires1;
@@ -134,15 +149,19 @@ public class DeatailAccountService {
     public List<DetailAccountSart> detailAccounts(List<DetailAccount> detailAccounts1) {
         List<DetailAccountSart> detailAccounts = new ArrayList<>();
         for (DetailAccount d : detailAccounts1) {
-            DetailAccountSart detailAccount = new DetailAccountSart();
-            detailAccount.setId(d.getId());
-            detailAccount.setFullName(d.getFullName());
-            detailAccount.setMota(d.getMoTa());
-            detailAccount.setImg(d.getImg());
-            List<Provided> provideds = provideds(d.getProvideds());
-            detailAccount.setProvideds(provideds);
-            detailAccount.setPrice(d.getPricePerDay());
-            detailAccounts.add(detailAccount);
+            for (Roles r : d.getAccount().getRoles()) {
+                if (r.getId() == 3) {
+                    DetailAccountSart detailAccount = new DetailAccountSart();
+                    detailAccount.setId(d.getId());
+                    detailAccount.setFullName(d.getFullName());
+                    detailAccount.setMota(d.getMoTa());
+                    detailAccount.setImg(d.getImg());
+                    List<Provided> provideds = provideds(d.getProvideds());
+                    detailAccount.setProvideds(provideds);
+                    detailAccount.setPrice(d.getPricePerDay());
+                    detailAccounts.add(detailAccount);
+                }
+            }
         }
         return detailAccounts;
     }

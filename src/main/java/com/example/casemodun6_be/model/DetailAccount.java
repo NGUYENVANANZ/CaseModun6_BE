@@ -34,11 +34,14 @@ public class DetailAccount {
     @OneToMany
     private List<Img> imgs;
 
-    @OneToMany
+    @ManyToMany
     private List<Provided> provideds;
 
-    @ManyToMany
+    @OneToMany
     private List<Comment> comments;
+
+    @OneToOne
+    private Account account;
 
     private long pricePerDay;
 
