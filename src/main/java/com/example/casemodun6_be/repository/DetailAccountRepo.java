@@ -10,15 +10,15 @@ import java.util.List;
 
 @Repository
 public interface DetailAccountRepo extends CrudRepository<DetailAccount, Long> {
-    @Query(nativeQuery = true,value = "SELECT * FROM detail_account where status = 1 ORDER BY join_date DESC")
+    @Query(nativeQuery = true,value = "SELECT * FROM detail_account where status = 1 ORDER BY join_date DESC limit 12")
     List<DetailAccount> findDetailNewbie();
 
-    @Query(nativeQuery = true,value = "SELECT * FROM detail_account where vip = 1 and status = 1 ORDER BY join_date DESC")
+    @Query(nativeQuery = true,value = "SELECT * FROM detail_account where vip = 1 and status = 1 ORDER BY join_date DESC limit 12")
     List<DetailAccount> findDetailVip();
 
-    @Query(nativeQuery = true,value = "SELECT * FROM detail_account where status = 1")
+    @Query(nativeQuery = true,value = "SELECT * FROM detail_account where detail_account.status = 1")
     List<DetailAccount> findDetailSart();
 
-    @Query(nativeQuery = true,value = "SELECT * FROM detail_account where gender =:gender and status = 1 ORDER BY join_date DESC")
+    @Query(nativeQuery = true,value = "SELECT * FROM detail_account where gender =:gender and status = 1 ORDER BY join_date DESC limit 12")
     List<DetailAccount> findDetailGender(@Param("gender") String gender);
 }

@@ -27,25 +27,11 @@ public class DeatailAccountService {
 
     public List<DetailAccountSart> showNewbie() {
         List<DetailAccountSart> detailAccounts = detailAccounts(detailAccountRepo.findDetailNewbie());
-        if (detailAccounts.size() > 12) {
-            List<DetailAccountSart> detailAccounts1 = new ArrayList<>();
-            for (int i = 0; i < 12; i++) {
-                detailAccounts1.add(detailAccounts.get(i));
-            }
-            return detailAccounts1;
-        }
         return detailAccounts;
     }
 
     public List<DetailAccountSart> showVip() {
         List<DetailAccountSart> detailAccounts = detailAccounts(detailAccountRepo.findDetailVip());
-        if (detailAccounts.size() > 12) {
-            List<DetailAccountSart> detailAccounts1 = new ArrayList<>();
-            for (int i = 0; i < 12; i++) {
-                detailAccounts1.add(detailAccounts.get(i));
-            }
-            return detailAccounts1;
-        }
         return detailAccounts;
     }
 
@@ -56,14 +42,6 @@ public class DeatailAccountService {
             detailAccounts = detailAccounts(detailAccountRepo.findDetailGender("Nam"));
         } else {
             detailAccounts = detailAccounts(detailAccountRepo.findDetailGender("Nu"));
-        }
-
-        if (detailAccounts.size() > 12) {
-            List<DetailAccountSart> detailAccounts1 = new ArrayList<>();
-            for (int i = 0; i < 12; i++) {
-                detailAccounts1.add(detailAccounts.get(i));
-            }
-            return detailAccounts1;
         }
         return detailAccounts;
     }
@@ -113,14 +91,6 @@ public class DeatailAccountService {
             }
         });
 
-        if (hires.size() > 6) {
-            List<Hires> hires1 = new ArrayList<>();
-            for (int i = 0; i < 6; i++) {
-                hires1.add(hires.get(i));
-            }
-            return hires1;
-        }
-
         return hires;
     }
 
@@ -161,6 +131,7 @@ public class DeatailAccountService {
                     detailAccount.setPrice(d.getPricePerDay());
                     detailAccounts.add(detailAccount);
                 }
+
             }
         }
         return detailAccounts;
@@ -172,16 +143,12 @@ public class DeatailAccountService {
         if (provideds.size() == 0) {
             return provideds1;
         }
-        List<Integer> randomInt = random(provideds.size() - 1);
-        for (int i = 0; i < randomInt.size(); i++) {
-            provideds1.add(provideds.get(randomInt.get(i)));
+        for (int i = 0; i < provideds.size(); i++) {
+            provideds1.add(provideds.get(i));
+            if (provideds1.size() == 3){
+                break;
+            }
         }
         return provideds1;
-    }
-
-    public List<Integer> random(int number) {
-        Random random = new Random();
-        List<Integer> randomNumbers = random.ints(0, number).distinct().limit(3).boxed().collect(Collectors.toList());
-        return randomNumbers;
     }
 }

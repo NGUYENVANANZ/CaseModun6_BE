@@ -1,6 +1,5 @@
 package com.example.casemodun6_be.config.filter;
 
-
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,3 +56,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 }
+
