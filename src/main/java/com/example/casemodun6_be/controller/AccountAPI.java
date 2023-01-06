@@ -5,6 +5,7 @@ import com.example.casemodun6_be.model.Account;
 import com.example.casemodun6_be.model.DTO.DetailAccountSart;
 import com.example.casemodun6_be.model.DTO.Hires;
 import com.example.casemodun6_be.model.DTO.Sart;
+import com.example.casemodun6_be.model.DTO.UserToken;
 import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.service.AccountService;
@@ -47,16 +48,18 @@ public class AccountAPI {
     IAccountServiceSearch iAccountServiceSearch;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Account account) {
+    public ResponseEntity<UserToken> login(@RequestBody Account account) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = jwtService.createToken(authentication);
-            return new ResponseEntity<>(token, HttpStatus.OK);
+            Account account1 = accountService.findByName(account.getUsername());
+            UserToken userToken = new UserToken(account1.getUsername(), token, account1.getRoles());
+            return new ResponseEntity<>(userToken, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
 
