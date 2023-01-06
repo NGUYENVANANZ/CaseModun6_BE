@@ -59,35 +59,37 @@ public class AccountAPI {
     @GetMapping("/newbie")
     public ResponseEntity<List<DetailAccountSart>> showNewbie() {
         List<DetailAccountSart> detailAccounts = detailAccount.showNewbie();
-        return new ResponseEntity<>( detailAccounts, HttpStatus.OK);
+        return new ResponseEntity<>(detailAccounts, HttpStatus.OK);
     }
-
-
     @GetMapping("/vip")
     public ResponseEntity<List<DetailAccountSart>> showVip() {
         List<DetailAccountSart> detailAccounts = detailAccount.showVip();
-        return new ResponseEntity<>( detailAccounts, HttpStatus.OK);
+        return new ResponseEntity<>(detailAccounts, HttpStatus.OK);
     }
-
     @GetMapping("/gender")
-    public ResponseEntity<List<DetailAccountSart>> showGender(){
+    public ResponseEntity<List<DetailAccountSart>> showGender() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = accountService.findByName(userDetails.getUsername());
         List<DetailAccountSart> detailAccountSarts = detailAccount.showGender(account.getGender());
-        return new ResponseEntity<>(detailAccountSarts ,HttpStatus.OK);
+        return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
     }
 
     @GetMapping("/sart")
-    public ResponseEntity<List<Sart>> showSart(){
+    public ResponseEntity<List<Sart>> showSart() {
         List<Sart> sarts = detailAccount.showSart();
-        return new ResponseEntity<>(sarts ,HttpStatus.OK);
+        return new ResponseEntity<>(sarts, HttpStatus.OK);
     }
 
     @GetMapping("/hires")
-    public ResponseEntity<List<Hires>> showHies(){
+    public ResponseEntity<List<Hires>> showHies() {
         List<Hires> hires = detailAccount.showHires();
-        return new ResponseEntity<>(hires ,HttpStatus.OK);
+        return new ResponseEntity<>(hires, HttpStatus.OK);
     }
 
-
+    @PostMapping ("/{id}")
+    public ResponseEntity<?> statust(@PathVariable long id) {
+        Account account = accountService.finbyid(id);
+        account.setStatus(false);
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
 }
