@@ -7,6 +7,7 @@ import com.example.casemodun6_be.model.DTO.Sart;
 import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.model.Employ;
 import com.example.casemodun6_be.model.Provided;
+import com.example.casemodun6_be.model.Roles;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.repository.EmployRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +43,6 @@ public class DeatailAccountService {
         } else {
             detailAccounts = detailAccounts(detailAccountRepo.findDetailGender("Nu"));
         }
-
-        if (detailAccounts.size() > 12) {
-            List<DetailAccountSart> detailAccounts1 = new ArrayList<>();
-            for (int i = 0; i < 7; i++) {
-                detailAccounts1.add(detailAccounts.get(i));
-            }
-            return detailAccounts1;
-        }
         return detailAccounts;
     }
 
@@ -69,7 +62,7 @@ public class DeatailAccountService {
 
         if (sarts.size() > 6) {
             List<Sart> sarts1 = new ArrayList<>();
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 6; i++) {
                 sarts1.add(sarts.get(i));
             }
             return sarts1;
@@ -97,14 +90,6 @@ public class DeatailAccountService {
                 return (int) (o2.getHires() - o1.getHires());
             }
         });
-
-        if (hires.size() > 13) {
-            List<Hires> hires1 = new ArrayList<>();
-            for (int i = 0; i < 12; i++) {
-                hires1.add(hires.get(i));
-            }
-            return hires1;
-        }
 
         return hires;
     }
@@ -134,14 +119,20 @@ public class DeatailAccountService {
     public List<DetailAccountSart> detailAccounts(List<DetailAccount> detailAccounts1) {
         List<DetailAccountSart> detailAccounts = new ArrayList<>();
         for (DetailAccount d : detailAccounts1) {
-            DetailAccountSart detailAccount = new DetailAccountSart();
-            detailAccount.setId(d.getId());
-            detailAccount.setFullName(d.getFullName());
-            detailAccount.setMota(d.getMoTa());
-            detailAccount.setImg(d.getImg());
-            List<Provided> provideds = provideds(d.getProvideds());
-            detailAccount.setProvideds(provideds);
-            detailAccounts.add(detailAccount);
+            for (Roles r : d.getAccount().getRoles()) {
+                if (r.getId() == 3) {
+                    DetailAccountSart detailAccount = new DetailAccountSart();
+                    detailAccount.setId(d.getId());
+                    detailAccount.setFullName(d.getFullName());
+                    detailAccount.setMota(d.getMoTa());
+                    detailAccount.setImg(d.getImg());
+                    List<Provided> provideds = provideds(d.getProvideds());
+                    detailAccount.setProvideds(provideds);
+                    detailAccount.setPrice(d.getPricePerDay());
+                    detailAccounts.add(detailAccount);
+                }
+
+            }
         }
         return detailAccounts;
     }
@@ -152,16 +143,12 @@ public class DeatailAccountService {
         if (provideds.size() == 0) {
             return provideds1;
         }
-        List<Integer> randomInt = random(provideds.size() - 1);
-        for (int i = 0; i < randomInt.size(); i++) {
-            provideds1.add(provideds.get(randomInt.get(i)));
+        for (int i = 0; i < provideds.size(); i++) {
+            provideds1.add(provideds.get(i));
+            if (provideds1.size() == 3){
+                break;
+            }
         }
         return provideds1;
-    }
-
-    public List<Integer> random(int number) {
-        Random random = new Random();
-        List<Integer> randomNumbers = random.ints(0, number).distinct().limit(3).boxed().collect(Collectors.toList());
-        return randomNumbers;
     }
 }
