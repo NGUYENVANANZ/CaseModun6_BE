@@ -56,10 +56,7 @@ public class AccountAPI {
 
             String token = jwtService.createToken(authentication);
             Account account1 = accountService.findByName(account.getUsername());
-            if (!account.isStatus()){
-                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
-            }
-            UserToken userToken = new UserToken(account1.getUsername(), token, account1.getDetailAccount().getRoles());
+            UserToken userToken = new UserToken(account1.getUsername(), token, account1.getDetailAccount().getRoles(), account1.getStatus());
             return new ResponseEntity<>(userToken, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
