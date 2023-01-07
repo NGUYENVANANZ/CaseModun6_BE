@@ -28,6 +28,7 @@ public class DetailAccount {
     private String fullName;
     private LocalDate birthday;
     private LocalDate joinDate;
+    private long money;
 
     private String img;
 
@@ -47,11 +48,11 @@ public class DetailAccount {
 
     private String faceLink;
 
-    private boolean status;
+    private long status;
 
-    private boolean vip;
+    private long vip;
 
-    public boolean isStatus() {
-        return status;
-    }
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Roles> roles;
+
 }
