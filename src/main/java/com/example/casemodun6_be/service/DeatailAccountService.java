@@ -112,13 +112,7 @@ public class DeatailAccountService {
                 return (int) (o2.getHires() - o1.getHires());
             }
         });
-        if (hires.size() > 6) {
-            List<Hires> hires1 = new ArrayList<>();
-            for (int i = 0; i < 6; i++) {
-                hires1.add(hires.get(i));
-            }
-            return hires;
-        }
+
         return hires;
     }
 
