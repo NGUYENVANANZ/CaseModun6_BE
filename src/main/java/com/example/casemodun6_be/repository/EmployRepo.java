@@ -9,7 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface EmployRepo extends CrudRepository<Employ, Long> {
-    @Query(nativeQuery = true,value = "SELECT employ.id, employ.account_id, employ.detail_account_id, sum(employ.hires) as hires FROM employ GROUP BY detail_account_id ORDER BY hires DESC limit 6")
+    @Query(nativeQuery = true,value = "SELECT employ.id, employ.account_id, employ.detail_account_id, sum(employ.hires) as hires FROM employ GROUP BY detail_account_id ORDER BY hires DESC")
     List<Employ> findEmployHires();
 
 }

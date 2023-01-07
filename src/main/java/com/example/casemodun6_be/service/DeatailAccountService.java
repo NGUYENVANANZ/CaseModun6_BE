@@ -27,11 +27,25 @@ public class DeatailAccountService {
 
     public List<DetailAccountSart> showNewbie() {
         List<DetailAccountSart> detailAccounts = detailAccounts(detailAccountRepo.findDetailNewbie());
+        if (detailAccounts.size() > 12) {
+            List<DetailAccountSart> detailAccountSarts = new ArrayList<>();
+            for (int i = 0; i < 12; i++) {
+                detailAccountSarts.add(detailAccounts.get(i));
+            }
+            return detailAccountSarts;
+        }
         return detailAccounts;
     }
 
     public List<DetailAccountSart> showVip() {
         List<DetailAccountSart> detailAccounts = detailAccounts(detailAccountRepo.findDetailVip());
+        if (detailAccounts.size() > 12) {
+            List<DetailAccountSart> detailAccountSarts = new ArrayList<>();
+            for (int i = 0; i < 12; i++) {
+                detailAccountSarts.add(detailAccounts.get(i));
+            }
+            return detailAccountSarts;
+        }
         return detailAccounts;
     }
 
@@ -42,6 +56,14 @@ public class DeatailAccountService {
             detailAccounts = detailAccounts(detailAccountRepo.findDetailGender("Nam"));
         } else {
             detailAccounts = detailAccounts(detailAccountRepo.findDetailGender("Nu"));
+        }
+
+        if (detailAccounts.size() > 12) {
+            List<DetailAccountSart> detailAccountSarts = new ArrayList<>();
+            for (int i = 0; i < 12; i++) {
+                detailAccountSarts.add(detailAccounts.get(i));
+            }
+            return detailAccountSarts;
         }
         return detailAccounts;
     }
@@ -90,7 +112,13 @@ public class DeatailAccountService {
                 return (int) (o2.getHires() - o1.getHires());
             }
         });
-
+        if (hires.size() > 6) {
+            List<Hires> hires1 = new ArrayList<>();
+            for (int i = 0; i < 6; i++) {
+                hires.add(hires1.get(i));
+            }
+            return hires;
+        }
         return hires;
     }
 
@@ -119,7 +147,7 @@ public class DeatailAccountService {
     public List<DetailAccountSart> detailAccounts(List<DetailAccount> detailAccounts1) {
         List<DetailAccountSart> detailAccounts = new ArrayList<>();
         for (DetailAccount d : detailAccounts1) {
-            for (Roles r : d.getAccount().getRoles()) {
+            for (Roles r : d.getRoles()) {
                 if (r.getId() == 3) {
                     DetailAccountSart detailAccount = new DetailAccountSart();
                     detailAccount.setId(d.getId());
