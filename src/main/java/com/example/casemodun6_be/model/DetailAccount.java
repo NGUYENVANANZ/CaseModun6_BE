@@ -48,14 +48,11 @@ public class DetailAccount {
 
     private String faceLink;
 
-    private boolean status;
+    private long status;
 
-    private boolean vip;
+    private long vip;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Roles> roles;
 
-    public boolean isStatus() {
-        return status;
-    }
 }
