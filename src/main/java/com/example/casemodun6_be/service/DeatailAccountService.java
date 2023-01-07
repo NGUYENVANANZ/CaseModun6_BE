@@ -115,7 +115,7 @@ public class DeatailAccountService {
         if (hires.size() > 6) {
             List<Hires> hires1 = new ArrayList<>();
             for (int i = 0; i < 6; i++) {
-                hires.add(hires1.get(i));
+                hires1.add(hires.get(i));
             }
             return hires;
         }
