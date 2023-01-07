@@ -56,7 +56,10 @@ public class AccountAPI {
 
             String token = jwtService.createToken(authentication);
             Account account1 = accountService.findByName(account.getUsername());
-            UserToken userToken = new UserToken(account1.getUsername(), token, account1.getRoles());
+            if (!account.isStatus()){
+                return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            }
+            UserToken userToken = new UserToken(account1.getUsername(), token, account1.getDetailAccount().getRoles());
             return new ResponseEntity<>(userToken, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
@@ -80,7 +83,7 @@ public class AccountAPI {
     public ResponseEntity<List<DetailAccountSart>> showGender(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = accountService.findByName(userDetails.getUsername());
-        List<DetailAccountSart> detailAccountSarts = detailAccount.showGender(account.getGender());
+        List<DetailAccountSart> detailAccountSarts = detailAccount.showGender(account.getDetailAccount().getGender());
         return new ResponseEntity<>(detailAccountSarts ,HttpStatus.OK);
     }
 

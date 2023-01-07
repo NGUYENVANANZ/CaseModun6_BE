@@ -18,14 +18,16 @@ public class Account {
     private String email;
     private String phoneNumber;
 
-    private long money;
-    private String gender;
-
     @OneToOne
     private DetailAccount detailAccount;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Roles> roles;
-
     private boolean status;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 }
