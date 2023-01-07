@@ -65,23 +65,15 @@ public class AccountAPI {
 
     @GetMapping("/newbie")
     public ResponseEntity<List<DetailAccountSart>> showNewbie() {
-<<<<<<< HEAD
         List<DetailAccountSart> detailAccounts = detailAccount.showNewbie();
         return new ResponseEntity<>(detailAccounts, HttpStatus.OK);
-=======
-        List<DetailAccountSart> detailAccountSarts = detailAccount.showNewbie();
-        return new ResponseEntity<>( detailAccountSarts, HttpStatus.OK);
->>>>>>> 1a283fb7492c1cd28560bb4b3d0700dbfe60fa4f
+
     }
     @GetMapping("/vip")
     public ResponseEntity<List<DetailAccountSart>> showVip() {
-<<<<<<< HEAD
         List<DetailAccountSart> detailAccounts = detailAccount.showVip();
         return new ResponseEntity<>(detailAccounts, HttpStatus.OK);
-=======
-        List<DetailAccountSart> detailAccountSarts = detailAccount.showVip();
-        return new ResponseEntity<>( detailAccountSarts, HttpStatus.OK);
->>>>>>> 1a283fb7492c1cd28560bb4b3d0700dbfe60fa4f
+
     }
     @GetMapping("/gender")
     public ResponseEntity<List<DetailAccountSart>> showGender() {
@@ -91,13 +83,9 @@ public class AccountAPI {
         return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
     }
 
-<<<<<<< HEAD
     @GetMapping("/sart")
     public ResponseEntity<List<Sart>> showSart() {
-=======
-    @GetMapping("/star")
-    public ResponseEntity<List<Sart>> showSart(){
->>>>>>> 1a283fb7492c1cd28560bb4b3d0700dbfe60fa4f
+
         List<Sart> sarts = detailAccount.showSart();
         return new ResponseEntity<>(sarts, HttpStatus.OK);
     }
@@ -108,19 +96,16 @@ public class AccountAPI {
         return new ResponseEntity<>(hires, HttpStatus.OK);
     }
 
-<<<<<<< HEAD
     @PostMapping ("/{id}")
     public ResponseEntity<?> statust(@PathVariable long id) {
         Account account = accountService.finbyid(id);
         account.setStatus(false);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
-}
-=======
+
     @GetMapping("/showAll")
     public ResponseEntity<List<DetailAccount>> showAll(){
         List<DetailAccount> detailAccountList = iAccountServiceSearch.getAll();
         return new ResponseEntity<>(detailAccountList,HttpStatus.OK);
     }
 }
->>>>>>> 1a283fb7492c1cd28560bb4b3d0700dbfe60fa4f
