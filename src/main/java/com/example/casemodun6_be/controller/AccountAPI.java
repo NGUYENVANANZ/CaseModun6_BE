@@ -95,6 +95,11 @@ public class AccountAPI {
         List<Hires> hires = detailAccount.showHires();
         return new ResponseEntity<>(hires ,HttpStatus.OK);
     }
+<<<<<<< HEAD
+    @PostMapping("/register")
+    public ResponseEntity<Account>register(@RequestBody Account account){
+        return new ResponseEntity<>(accountService)
+=======
 
     @GetMapping("/showAll")
     public ResponseEntity<List<DetailAccount>> showAll(){
@@ -107,5 +112,6 @@ public class AccountAPI {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = accountService.findByName(userDetails.getUsername());
         return new ResponseEntity<>(account.getDetailAccount() ,HttpStatus.OK);
+>>>>>>> 23e3ca7360149a7441d5149f02f8afc068a8a581
     }
 }
