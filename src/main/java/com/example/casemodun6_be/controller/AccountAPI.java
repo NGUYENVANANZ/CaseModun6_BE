@@ -79,13 +79,9 @@ public class AccountAPI {
     public ResponseEntity<List<DetailAccountSart>> showGender() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = accountService.findByName(userDetails.getUsername());
-<<<<<<< HEAD
-        List<DetailAccountSart> detailAccountSarts = detailAccount.showGender(account.getGender());
-        return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
-=======
         List<DetailAccountSart> detailAccountSarts = detailAccount.showGender(account.getDetailAccount().getGender());
-        return new ResponseEntity<>(detailAccountSarts ,HttpStatus.OK);
->>>>>>> ed34d2cd0238dd79868d512a058a205c6632899f
+        return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
+
     }
 
     @GetMapping("/sart")
@@ -104,7 +100,7 @@ public class AccountAPI {
     @PostMapping ("/{id}")
     public ResponseEntity<?> statust(@PathVariable long id) {
         Account account = accountService.finbyid(id);
-        account.setStatus(false);
+        account.setStatus(0);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
