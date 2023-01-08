@@ -91,6 +91,8 @@ public class AccountAPI {
         List<Hires> hires = detailAccount.showHires();
         return new ResponseEntity<>(hires ,HttpStatus.OK);
     }
-
-
+    @PostMapping("/register")
+    public ResponseEntity<Account>register(@RequestBody Account account){
+        return new ResponseEntity<>(accountService)
+    }
 }
