@@ -56,7 +56,7 @@ public class AccountAPI {
 
             String token = jwtService.createToken(authentication);
             Account account1 = accountService.findByName(account.getUsername());
-            UserToken userToken = new UserToken(account1.getUsername(), token, account1.getDetailAccount().getRoles(), account1.getStatus());
+            UserToken userToken = new UserToken(account1.getUsername(), token, account1.getDetailAccount().getRoles(), account1.getDetailAccount().getImg(), account1.getStatus());
             return new ResponseEntity<>(userToken, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
@@ -103,10 +103,23 @@ public class AccountAPI {
         account.setStatus(0);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
+<<<<<<< HEAD
+    @PostMapping("/register")
+    public ResponseEntity<Account>register(@RequestBody Account account){
+        return new ResponseEntity<>(accountService)
+=======
 
     @GetMapping("/showAll")
     public ResponseEntity<List<DetailAccount>> showAll(){
         List<DetailAccount> detailAccountList = iAccountServiceSearch.getAll();
         return new ResponseEntity<>(detailAccountList,HttpStatus.OK);
+    }
+
+    @GetMapping("/detailAccount")
+    public ResponseEntity<DetailAccount> detailAccount(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = accountService.findByName(userDetails.getUsername());
+        return new ResponseEntity<>(account.getDetailAccount() ,HttpStatus.OK);
+>>>>>>> 23e3ca7360149a7441d5149f02f8afc068a8a581
     }
 }

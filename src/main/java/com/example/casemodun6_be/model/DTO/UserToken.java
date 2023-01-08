@@ -8,6 +8,7 @@ public class UserToken {
     private String userName;
     private String token;
     private List<Roles> roles;
+    private  String img;
 
     private  long status;
     public String getUserName() {
@@ -45,10 +46,19 @@ public class UserToken {
         this.status = status;
     }
 
-    public UserToken(String userName, String token, List<Roles> roles, long status) {
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public UserToken(String userName, String token, List<Roles> roles, String img, long status) {
         this.userName = userName;
         this.token = token;
         this.roles = roles;
+        this.img = img;
         this.status = status;
     }
 }

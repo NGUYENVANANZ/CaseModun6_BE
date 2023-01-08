@@ -41,9 +41,6 @@ public class DetailAccount {
     @OneToMany
     private List<Comment> comments;
 
-    @OneToOne
-    private Account account;
-
     private long pricePerDay;
 
     private String faceLink;
