@@ -8,7 +8,9 @@ public class UserToken {
     private String userName;
     private String token;
     private List<Roles> roles;
+    private  String img;
 
+    private  long status;
     public String getUserName() {
         return userName;
     }
@@ -36,9 +38,27 @@ public class UserToken {
     public UserToken() {
     }
 
-    public UserToken(String userName, String token, List<Roles> roles) {
+    public long getStatus() {
+        return status;
+    }
+
+    public void setStatus(long status) {
+        this.status = status;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public UserToken(String userName, String token, List<Roles> roles, String img, long status) {
         this.userName = userName;
         this.token = token;
         this.roles = roles;
+        this.img = img;
+        this.status = status;
     }
 }

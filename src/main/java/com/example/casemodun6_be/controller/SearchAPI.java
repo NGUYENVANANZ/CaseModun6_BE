@@ -13,8 +13,9 @@ import java.util.List;
 @RequestMapping("/search")
 @CrossOrigin("*")
 public class SearchAPI {
-@Autowired
+    @Autowired
     IAccountServiceSearch iAccountServiceSearch;
+
     @GetMapping("/{name}")
     public ResponseEntity<List<DetailAccount>> findByName(@PathVariable String name) {
         return new ResponseEntity<>(iAccountServiceSearch.findByName(name), HttpStatus.OK);

@@ -18,14 +18,9 @@ public class Account {
     private String email;
     private String phoneNumber;
 
-    private long money;
-    private String gender;
-
     @OneToOne
     private DetailAccount detailAccount;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Roles> roles;
+    private long status;
 
-    private boolean status;
 }

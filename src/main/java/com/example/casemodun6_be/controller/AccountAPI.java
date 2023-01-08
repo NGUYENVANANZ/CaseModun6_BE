@@ -11,6 +11,7 @@ import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.DeatailAccountService;
 import com.example.casemodun6_be.service.JwtService;
+import com.example.casemodun6_be.service.search.IAccountServiceSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,9 @@ public class AccountAPI {
     @Autowired
     AccountService accountService;
 
+    @Autowired
+    IAccountServiceSearch iAccountServiceSearch;
+
     @PostMapping("/login")
     public ResponseEntity<UserToken> login(@RequestBody Account account) {
         try {
@@ -52,7 +56,7 @@ public class AccountAPI {
 
             String token = jwtService.createToken(authentication);
             Account account1 = accountService.findByName(account.getUsername());
-            UserToken userToken = new UserToken(account1.getUsername(), token, account1.getRoles());
+            UserToken userToken = new UserToken(account1.getUsername(), token, account1.getDetailAccount().getRoles(), account1.getDetailAccount().getImg(), account1.getStatus());
             return new ResponseEntity<>(userToken, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
@@ -76,7 +80,7 @@ public class AccountAPI {
     public ResponseEntity<List<DetailAccountSart>> showGender(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = accountService.findByName(userDetails.getUsername());
-        List<DetailAccountSart> detailAccountSarts = detailAccount.showGender(account.getGender());
+        List<DetailAccountSart> detailAccountSarts = detailAccount.showGender(account.getDetailAccount().getGender());
         return new ResponseEntity<>(detailAccountSarts ,HttpStatus.OK);
     }
 
@@ -91,8 +95,23 @@ public class AccountAPI {
         List<Hires> hires = detailAccount.showHires();
         return new ResponseEntity<>(hires ,HttpStatus.OK);
     }
+<<<<<<< HEAD
     @PostMapping("/register")
     public ResponseEntity<Account>register(@RequestBody Account account){
         return new ResponseEntity<>(accountService)
+=======
+
+    @GetMapping("/showAll")
+    public ResponseEntity<List<DetailAccount>> showAll(){
+        List<DetailAccount> detailAccountList = iAccountServiceSearch.getAll();
+        return new ResponseEntity<>(detailAccountList,HttpStatus.OK);
+    }
+
+    @GetMapping("/detailAccount")
+    public ResponseEntity<DetailAccount> detailAccount(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = accountService.findByName(userDetails.getUsername());
+        return new ResponseEntity<>(account.getDetailAccount() ,HttpStatus.OK);
+>>>>>>> 23e3ca7360149a7441d5149f02f8afc068a8a581
     }
 }
