@@ -1,5 +1,6 @@
 package com.example.casemodun6_be.model;
 
+import com.example.casemodun6_be.model.DTO.AccountDTO;
 import lombok.Data;
 
 import javax.persistence.*;
