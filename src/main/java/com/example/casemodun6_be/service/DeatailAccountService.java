@@ -164,7 +164,6 @@ public class DeatailAccountService {
                     detailAccount.setPrice(d.getPricePerDay());
                     detailAccounts.add(detailAccount);
                 }
-
             }
         }
         return detailAccounts;
