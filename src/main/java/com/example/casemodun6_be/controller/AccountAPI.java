@@ -8,6 +8,7 @@ import com.example.casemodun6_be.model.DTO.Sart;
 import com.example.casemodun6_be.model.DTO.UserToken;
 import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
+import com.example.casemodun6_be.repository.IAccountRepo;
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.DeatailAccountService;
 import com.example.casemodun6_be.service.JwtService;
@@ -46,6 +47,9 @@ public class AccountAPI {
 
     @Autowired
     IAccountServiceSearch iAccountServiceSearch;
+
+    @Autowired
+    IAccountRepo iAccountRepo;
 
     @PostMapping("/login")
     public ResponseEntity<UserToken> login(@RequestBody Account account) {
@@ -96,14 +100,15 @@ public class AccountAPI {
         return new ResponseEntity<>(hires ,HttpStatus.OK);
     }
 
-//    @PostMapping("/register")
-//    public ResponseEntity<Account>register(@RequestBody Account account) {
-//        return new ResponseEntity<>(accountService)
-//    }
+    @PostMapping("/register")
+    public ResponseEntity<Account>register(@RequestBody Account account) {
+        iAccountRepo.save(account);
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
 
     @GetMapping("/showAll")
-    public ResponseEntity<List<DetailAccount>> showAll(){
-        List<DetailAccount> detailAccountList = iAccountServiceSearch.getAll();
+    public ResponseEntity<List<DetailAccountSart>> showAll(){
+        List<DetailAccountSart> detailAccountList = detailAccount.getAll();
         return new ResponseEntity<>(detailAccountList,HttpStatus.OK);
     }
 

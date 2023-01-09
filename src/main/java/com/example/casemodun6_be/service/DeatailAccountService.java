@@ -10,6 +10,7 @@ import com.example.casemodun6_be.model.Provided;
 import com.example.casemodun6_be.model.Roles;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.repository.EmployRepo;
+import com.example.casemodun6_be.repository.ISearchRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,16 @@ public class DeatailAccountService {
 
     @Autowired
     EmployRepo employRepo;
+
+    @Autowired
+    ISearchRepo iSearchRepo;
+    public List<DetailAccountSart> getAll() {
+        return detailAccounts(detailAccountRepo.getAll());
+    }
+
+    public List<DetailAccountSart> search(String name) {
+        return detailAccounts(iSearchRepo.findByName(name));
+    }
 
     public List<DetailAccountSart> showNewbie() {
         List<DetailAccountSart> detailAccounts = detailAccounts(detailAccountRepo.findDetailNewbie());

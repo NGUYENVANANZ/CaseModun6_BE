@@ -12,9 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -77,5 +75,15 @@ public class ProfileAPI {
         detailAccount.setStatus(0);
         detailAccountRepo.save(detailAccount);
         return new ResponseEntity<>(detailAccount, HttpStatus.OK);
+    }
+
+    @PostMapping("/saveDetailAccount")
+    public ResponseEntity<DetailAccount> save(@RequestBody String img){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = accountService.findByName(userDetails.getUsername());
+        DetailAccount detailAccount = account.getDetailAccount();
+        detailAccount.setImg(img);
+        detailAccountRepo.save(detailAccount);
+        return new ResponseEntity<>(detailAccount ,HttpStatus.OK);
     }
 }
