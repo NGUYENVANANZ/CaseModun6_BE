@@ -7,6 +7,7 @@ import com.example.casemodun6_be.model.DTO.Hires;
 import com.example.casemodun6_be.model.DTO.Sart;
 import com.example.casemodun6_be.model.DTO.UserToken;
 import com.example.casemodun6_be.model.DetailAccount;
+import com.example.casemodun6_be.model.Roles;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.DeatailAccountService;
@@ -22,8 +23,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.Role;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -95,23 +99,19 @@ public class AccountAPI {
         List<Hires> hires = detailAccount.showHires();
         return new ResponseEntity<>(hires ,HttpStatus.OK);
     }
-<<<<<<< HEAD
-    @PostMapping("/register")
-    public ResponseEntity<Account>register(@RequestBody Account account){
-        return new ResponseEntity<>(accountService)
-=======
 
-    @GetMapping("/showAll")
-    public ResponseEntity<List<DetailAccount>> showAll(){
-        List<DetailAccount> detailAccountList = iAccountServiceSearch.getAll();
-        return new ResponseEntity<>(detailAccountList,HttpStatus.OK);
-    }
+//    @GetMapping("/showAll")
+//    public ResponseEntity<List<DetailAccount>> showAll(){
+//        List<DetailAccount> detailAccountList = iAccountServiceSearch.getAll();
+//        return new ResponseEntity<>(detailAccountList,HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/detailAccount")
+//    public ResponseEntity<DetailAccount> detailAccount(){
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Account account = accountService.findByName(userDetails.getUsername());
+//        return new ResponseEntity<>(account.getDetailAccount() ,HttpStatus.OK);
+//    }
 
-    @GetMapping("/detailAccount")
-    public ResponseEntity<DetailAccount> detailAccount(){
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Account account = accountService.findByName(userDetails.getUsername());
-        return new ResponseEntity<>(account.getDetailAccount() ,HttpStatus.OK);
->>>>>>> 23e3ca7360149a7441d5149f02f8afc068a8a581
-    }
+
 }

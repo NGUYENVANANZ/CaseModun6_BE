@@ -1,13 +1,10 @@
 package com.example.casemodun6_be.service;
 
 
+import com.example.casemodun6_be.model.*;
 import com.example.casemodun6_be.model.DTO.DetailAccountSart;
 import com.example.casemodun6_be.model.DTO.Hires;
 import com.example.casemodun6_be.model.DTO.Sart;
-import com.example.casemodun6_be.model.DetailAccount;
-import com.example.casemodun6_be.model.Employ;
-import com.example.casemodun6_be.model.Provided;
-import com.example.casemodun6_be.model.Roles;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.repository.EmployRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -172,5 +169,9 @@ public class DeatailAccountService {
             }
         }
         return provideds1;
+    }
+
+    public DetailAccount save(DetailAccount detailAccount){
+      return   detailAccountRepo.save(detailAccount);
     }
 }
