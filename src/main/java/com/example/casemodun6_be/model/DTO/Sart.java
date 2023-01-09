@@ -1,8 +1,5 @@
 package com.example.casemodun6_be.model.DTO;
 
-import com.example.casemodun6_be.model.Provided;
-
-import java.util.List;
 
 public class Sart {
     private DetailAccountSart detailAccountSart;

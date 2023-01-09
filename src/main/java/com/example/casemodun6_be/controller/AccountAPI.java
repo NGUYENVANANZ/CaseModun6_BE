@@ -2,13 +2,11 @@ package com.example.casemodun6_be.controller;
 
 
 import com.example.casemodun6_be.model.Account;
-import com.example.casemodun6_be.model.DTO.DetailAccountSart;
-import com.example.casemodun6_be.model.DTO.Hires;
-import com.example.casemodun6_be.model.DTO.Sart;
-import com.example.casemodun6_be.model.DTO.UserToken;
+import com.example.casemodun6_be.model.DTO.*;
 import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.model.Roles;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
+import com.example.casemodun6_be.repository.IAccountRepo;
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.DeatailAccountService;
 import com.example.casemodun6_be.service.JwtService;
@@ -51,6 +49,9 @@ public class AccountAPI {
     @Autowired
     IAccountServiceSearch iAccountServiceSearch;
 
+    @Autowired
+    IAccountRepo iAccountRepo;
+
     @PostMapping("/login")
     public ResponseEntity<UserToken> login(@RequestBody Account account) {
         try {
@@ -66,6 +67,7 @@ public class AccountAPI {
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
+
 
     @GetMapping("/newbie")
     public ResponseEntity<List<DetailAccountSart>> showNewbie() {
@@ -100,18 +102,20 @@ public class AccountAPI {
         return new ResponseEntity<>(hires ,HttpStatus.OK);
     }
 
-//    @GetMapping("/showAll")
-//    public ResponseEntity<List<DetailAccount>> showAll(){
-//        List<DetailAccount> detailAccountList = iAccountServiceSearch.getAll();
-//        return new ResponseEntity<>(detailAccountList,HttpStatus.OK);
-//    }
-//
-//    @GetMapping("/detailAccount")
-//    public ResponseEntity<DetailAccount> detailAccount(){
-//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Account account = accountService.findByName(userDetails.getUsername());
-//        return new ResponseEntity<>(account.getDetailAccount() ,HttpStatus.OK);
-//    }
 
+
+
+    @GetMapping("/showAll")
+    public ResponseEntity<List<DetailAccountSart>> showAll(){
+        List<DetailAccountSart> detailAccountList = detailAccount.getAll();
+        return new ResponseEntity<>(detailAccountList,HttpStatus.OK);
+    }
+
+    @GetMapping("/detailAccount")
+    public ResponseEntity<DetailAccount> detailAccount(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = accountService.findByName(userDetails.getUsername());
+        return new ResponseEntity<>(account.getDetailAccount() ,HttpStatus.OK);
+    }
 
 }

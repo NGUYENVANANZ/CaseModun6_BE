@@ -5,11 +5,14 @@ import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.model.Employ;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface EmployRepo extends CrudRepository<Employ, Long> {
-    @Query(nativeQuery = true,value = "SELECT employ.id, employ.account_id, employ.detail_account_id, sum(employ.hires) as hires FROM employ GROUP BY detail_account_id ORDER BY hires DESC limit 6")
+    @Query(nativeQuery = true,value = "SELECT employ.id, employ.account_id, employ.detail_account_id, sum(employ.hires) as hires  , employ.date, employ.money FROM employ GROUP BY detail_account_id ORDER BY hires DESC limit 6")
     List<Employ> findEmployHires();
 
+    @Query(nativeQuery = true,value = "SELECT * FROM employ where account_id = :account_id  ORDER BY date DESC ")
+    List<Employ> showEmploy(@Param("account_id") long account_id);
 }

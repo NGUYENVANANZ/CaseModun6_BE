@@ -3,6 +3,8 @@ package com.example.casemodun6_be.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Data
@@ -16,6 +18,10 @@ public class Employ {
 
     @ManyToOne
     private DetailAccount detailAccount;
+
+    private LocalDate date;
+
+    private long money;
 
     private long hires;
 
