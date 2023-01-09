@@ -1,7 +1,9 @@
 package com.example.casemodun6_be.service;
 
 import com.example.casemodun6_be.model.Account;
+import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.model.Roles;
+import com.example.casemodun6_be.repository.AdminRepo;
 import com.example.casemodun6_be.repository.IAccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -17,6 +19,9 @@ import java.util.List;
 public class AccountService implements UserDetailsService {
     @Autowired
     IAccountRepo iAccountRepo;
+
+    @Autowired
+    AdminRepo adminRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -37,8 +42,12 @@ public class AccountService implements UserDetailsService {
     public Account findbysdt(String phoneNumber) {
         return iAccountRepo.findByPhoneNumber(phoneNumber);
     }
+
     public Account finbyid(long id){
         return iAccountRepo.findById(id);
     }
 
+    public DetailAccount finbyVip(long vip){
+        return adminRepo.findByIdV(vip);
+}
 }

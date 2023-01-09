@@ -7,6 +7,7 @@ import com.example.casemodun6_be.model.DTO.Hires;
 import com.example.casemodun6_be.model.DTO.Sart;
 import com.example.casemodun6_be.model.DTO.UserToken;
 import com.example.casemodun6_be.model.DetailAccount;
+import com.example.casemodun6_be.model.Roles;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.repository.IAccountRepo;
 import com.example.casemodun6_be.service.AccountService;
@@ -54,8 +55,7 @@ public class AccountAPI {
     @PostMapping("/login")
     public ResponseEntity<UserToken> login(@RequestBody Account account) {
         try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword()));
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = jwtService.createToken(authentication);
@@ -67,30 +67,59 @@ public class AccountAPI {
         }
     }
 
+    @GetMapping("/roles")
+    public ResponseEntity<Boolean> checkRoles() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = accountService.findByName(userDetails.getUsername());
+        for (int i = 0; i < account.getDetailAccount().getRoles().size(); i++) {
+            if (account.getDetailAccount().getRoles().get(i).getId() == 1) {
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/roles1")
+    public ResponseEntity<Boolean> checkRoles1() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = accountService.findByName(userDetails.getUsername());
+        boolean check = true;
+        for (int i = 0; i < account.getDetailAccount().getRoles().size(); i++) {
+            if (account.getDetailAccount().getRoles().get(i).getId() == 1) {
+                check = false;
+            }
+        }
+        if (check){
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/newbie")
     public ResponseEntity<List<DetailAccountSart>> showNewbie() {
-        List<DetailAccountSart> detailAccounts = detailAccount.showNewbie();
-        return new ResponseEntity<>(detailAccounts, HttpStatus.OK);
-
+        List<DetailAccountSart> detailAccountSarts = detailAccount.showNewbie();
+        return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
     }
+
     @GetMapping("/vip")
     public ResponseEntity<List<DetailAccountSart>> showVip() {
-        List<DetailAccountSart> detailAccounts = detailAccount.showVip();
-        return new ResponseEntity<>(detailAccounts, HttpStatus.OK);
-
+        List<DetailAccountSart> detailAccountSarts = detailAccount.showVip();
+        return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
     }
+
+
     @GetMapping("/gender")
     public ResponseEntity<List<DetailAccountSart>> showGender() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = accountService.findByName(userDetails.getUsername());
         List<DetailAccountSart> detailAccountSarts = detailAccount.showGender(account.getDetailAccount().getGender());
         return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
-
     }
 
-    @GetMapping("/sart")
-    public ResponseEntity<List<Sart>> showSart() {
 
+    @GetMapping("/star")
+    public ResponseEntity<List<Sart>> showSart() {
         List<Sart> sarts = detailAccount.showSart();
         return new ResponseEntity<>(sarts, HttpStatus.OK);
     }
@@ -101,29 +130,22 @@ public class AccountAPI {
         return new ResponseEntity<>(hires, HttpStatus.OK);
     }
 
-    @PostMapping ("/{id}")
-    public ResponseEntity<?> statust(@PathVariable long id) {
-        Account account = accountService.finbyid(id);
-        account.setStatus(0);
-        return new ResponseEntity<>(account, HttpStatus.OK);
-    }
-
     @PostMapping("/register")
-    public ResponseEntity<Account>register(@RequestBody Account account) {
+    public ResponseEntity<Account> register(@RequestBody Account account) {
         iAccountRepo.save(account);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @GetMapping("/showAll")
-    public ResponseEntity<List<DetailAccountSart>> showAll(){
+    public ResponseEntity<List<DetailAccountSart>> showAll() {
         List<DetailAccountSart> detailAccountList = detailAccount.getAll();
-        return new ResponseEntity<>(detailAccountList,HttpStatus.OK);
+        return new ResponseEntity<>(detailAccountList, HttpStatus.OK);
     }
 
     @GetMapping("/detailAccount")
-    public ResponseEntity<DetailAccount> detailAccount(){
+    public ResponseEntity<DetailAccount> detailAccount() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = accountService.findByName(userDetails.getUsername());
-        return new ResponseEntity<>(account.getDetailAccount() ,HttpStatus.OK);
+        return new ResponseEntity<>(account.getDetailAccount(), HttpStatus.OK);
     }
 }
