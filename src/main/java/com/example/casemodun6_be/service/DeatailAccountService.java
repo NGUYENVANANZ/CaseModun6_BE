@@ -23,6 +23,7 @@ public class DeatailAccountService {
     @Autowired
     DetailAccountRepo detailAccountRepo;
 
+
     @Autowired
     EmployRepo employRepo;
 
@@ -164,7 +165,6 @@ public class DeatailAccountService {
                     detailAccount.setPrice(d.getPricePerDay());
                     detailAccounts.add(detailAccount);
                 }
-
             }
         }
         return detailAccounts;
@@ -184,4 +184,9 @@ public class DeatailAccountService {
         }
         return provideds1;
     }
+
+
+
+
+
 }
