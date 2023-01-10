@@ -23,4 +23,7 @@ public class Account {
 
     private long status;
 
+
+
+
 }

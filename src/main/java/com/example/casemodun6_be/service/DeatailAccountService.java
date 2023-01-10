@@ -23,6 +23,7 @@ public class DeatailAccountService {
     @Autowired
     DetailAccountRepo detailAccountRepo;
 
+
     @Autowired
     EmployRepo employRepo;
 
@@ -184,4 +185,9 @@ public class DeatailAccountService {
         }
         return provideds1;
     }
+
+
+
+
+
 }
