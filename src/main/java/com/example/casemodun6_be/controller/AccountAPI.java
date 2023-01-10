@@ -140,7 +140,6 @@ public class AccountAPI {
     }
 
     @PostMapping("/register")
-<<<<<<< HEAD
     public ResponseEntity<Account> register(@RequestBody SignUpForm signUpForm) {
         DetailAccount detailAccount1 = new DetailAccount();
         detailAccount1.setGender(signUpForm.getGender());
@@ -159,9 +158,6 @@ public class AccountAPI {
         account.setPhoneNumber(signUpForm.getPhoneNumber());
         account.setDetailAccount(detailAccount1);
         account.setStatus(1);
-=======
-    public ResponseEntity<Account> register(@RequestBody Account account) {
->>>>>>> 7d24288baf748abfe92f62ff1cad04069dd48cb9
         iAccountRepo.save(account);
 
         return new ResponseEntity<>(account, HttpStatus.OK);
