@@ -102,12 +102,12 @@ public class AccountAPI {
         return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
     }
 
-
     @GetMapping("/vip")
     public ResponseEntity<List<DetailAccountSart>> showVip() {
         List<DetailAccountSart> detailAccountSarts = detailAccount.showVip();
         return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
     }
+
 
     @GetMapping("/gender")
     public ResponseEntity<List<DetailAccountSart>> showGender() {
@@ -116,6 +116,7 @@ public class AccountAPI {
         List<DetailAccountSart> detailAccountSarts = detailAccount.showGender(account.getDetailAccount().getGender());
         return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
     }
+
 
     @GetMapping("/star")
     public ResponseEntity<List<Sart>> showSart() {
