@@ -13,5 +13,4 @@ public interface ISearchRepo extends PagingAndSortingRepository<DetailAccount,Lo
     @Query(nativeQuery = true, value = "SELECT * FROM detail_account WHERE full_name LIKE concat('%',:full_name,'%')")
     List<DetailAccount> findByName(@Param("full_name") String full_name);
 
-
 }
