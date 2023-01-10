@@ -76,18 +76,47 @@ public class AccountAPI {
         }
     }
 
+    @GetMapping("/roles")
+    public ResponseEntity<Boolean> checkRoles() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = accountService.findByName(userDetails.getUsername());
+        for (int i = 0; i < account.getDetailAccount().getRoles().size(); i++) {
+            if (account.getDetailAccount().getRoles().get(i).getId() == 1) {
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/roles1")
+    public ResponseEntity<Boolean> checkRoles1() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = accountService.findByName(userDetails.getUsername());
+        boolean check = true;
+        for (int i = 0; i < account.getDetailAccount().getRoles().size(); i++) {
+            if (account.getDetailAccount().getRoles().get(i).getId() == 1) {
+                check = false;
+            }
+        }
+        if (check){
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/newbie")
     public ResponseEntity<List<DetailAccountSart>> showNewbie() {
         List<DetailAccountSart> detailAccountSarts = detailAccount.showNewbie();
         return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
     }
 
-
     @GetMapping("/vip")
     public ResponseEntity<List<DetailAccountSart>> showVip() {
         List<DetailAccountSart> detailAccountSarts = detailAccount.showVip();
         return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
     }
+
 
     @GetMapping("/gender")
     public ResponseEntity<List<DetailAccountSart>> showGender() {
@@ -96,6 +125,7 @@ public class AccountAPI {
         List<DetailAccountSart> detailAccountSarts = detailAccount.showGender(account.getDetailAccount().getGender());
         return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
     }
+
 
     @GetMapping("/star")
     public ResponseEntity<List<Sart>> showSart() {
@@ -110,6 +140,7 @@ public class AccountAPI {
     }
 
     @PostMapping("/register")
+<<<<<<< HEAD
     public ResponseEntity<Account> register(@RequestBody SignUpForm signUpForm) {
         DetailAccount detailAccount1 = new DetailAccount();
         detailAccount1.setGender(signUpForm.getGender());
@@ -128,6 +159,9 @@ public class AccountAPI {
         account.setPhoneNumber(signUpForm.getPhoneNumber());
         account.setDetailAccount(detailAccount1);
         account.setStatus(1);
+=======
+    public ResponseEntity<Account> register(@RequestBody Account account) {
+>>>>>>> 7d24288baf748abfe92f62ff1cad04069dd48cb9
         iAccountRepo.save(account);
 
         return new ResponseEntity<>(account, HttpStatus.OK);

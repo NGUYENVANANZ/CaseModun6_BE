@@ -4,6 +4,8 @@ package com.example.casemodun6_be.service.search;
 
 
 import com.example.casemodun6_be.model.DetailAccount;
+import com.example.casemodun6_be.repository.AdminRepo;
+import com.example.casemodun6_be.repository.IAccountRepo;
 import com.example.casemodun6_be.repository.ISearchRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,10 @@ public class AccountServiceSearch implements IAccountServiceSearch {
     @Autowired
     ISearchRepo iSearchRepo;
 
+    @Autowired
+    AdminRepo adminRepo;
+
+
     @Override
     public List<DetailAccount> findByName(String name) {
         return iSearchRepo.findByName(name);
@@ -25,8 +31,6 @@ public class AccountServiceSearch implements IAccountServiceSearch {
     public List<DetailAccount> getAll() {
             return (List<DetailAccount>) iSearchRepo.findAll() ;
         }
-
-
 
 
 //    @Override
