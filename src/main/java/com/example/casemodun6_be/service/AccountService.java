@@ -39,20 +39,21 @@ public class AccountService implements UserDetailsService {
     public Account findByName(String name) {
         return iAccountRepo.findByUsername(name);
     }
+
     public Account findbysdt(String phoneNumber) {
         return iAccountRepo.findByPhoneNumber(phoneNumber);
     }
-<<<<<<< HEAD
+
     public Account findByEmail(String email) {
         return iAccountRepo.findByUsername(email);
-=======
-
-    public Account finbyid(long id){
-        return iAccountRepo.findById(id);
->>>>>>> 7d24288baf748abfe92f62ff1cad04069dd48cb9
     }
 
-    public DetailAccount finbyVip(long vip){
+    public Account finbyid(long id) {
+        return iAccountRepo.findById(id);
+    }
+
+    public DetailAccount finbyVip(long vip) {
         return adminRepo.findByIdV(vip);
+    }
 }
-}
+
