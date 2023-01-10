@@ -12,8 +12,18 @@ public class Roles implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
+
+    public Roles() {
+
+    }
+
     @Override
     public String getAuthority() {
         return name;
+    }
+
+    public Roles(long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 }
