@@ -69,7 +69,7 @@ public class AccountAPI {
 
             String token = jwtService.createToken(authentication);
             Account account1 = accountService.findByName(account.getUsername());
-            UserToken userToken = new UserToken(account1.getUsername(), token, account1.getDetailAccount().getRoles(), account1.getDetailAccount().getImg(), account1.getStatus());
+            UserToken userToken = new UserToken(account1.getId(),account1.getUsername(), token, account1.getDetailAccount().getRoles(), account1.getDetailAccount().getImg(), account1.getStatus());
             if (userToken.getStatus() == 0){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

@@ -5,6 +5,7 @@ import com.example.casemodun6_be.model.Roles;
 import java.util.List;
 
 public class UserToken {
+    private long id;
     private String userName;
     private String token;
     private List<Roles> roles;
@@ -54,7 +55,8 @@ public class UserToken {
         this.img = img;
     }
 
-    public UserToken(String userName, String token, List<Roles> roles, String img, long status) {
+    public UserToken(long id, String userName, String token, List<Roles> roles, String img, long status) {
+        this.id = id;
         this.userName = userName;
         this.token = token;
         this.roles = roles;
