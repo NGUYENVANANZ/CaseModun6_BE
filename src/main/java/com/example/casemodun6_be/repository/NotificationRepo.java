@@ -10,6 +10,9 @@ import java.util.List;
 
 @Repository
 public interface NotificationRepo extends PagingAndSortingRepository<Notification,Long> {
-    @Query(nativeQuery = true, value = "SELECT * FROM notification WHERE account_id =:account_id")
+    @Query(nativeQuery = true, value = "SELECT * FROM notification WHERE account_id =:account_id ORDER BY date DESC")
     List<Notification> showNotification(@Param("account_id") long account_id);
+
+
+
 }

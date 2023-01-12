@@ -20,8 +20,9 @@ public class Notification {
     private Account account;
 
     @ManyToOne
-    private Account account1;
+    private Account accountSend;
 
     private long status;
 
+    private long id_answer;
 }

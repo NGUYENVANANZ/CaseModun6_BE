@@ -1,16 +1,15 @@
 package com.example.casemodun6_be.model.DTO;
 
-import com.example.casemodun6_be.model.Account;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 public class NotificationDTO {
 
     private long id;
+
+    private long id_account;
+
+
+    private String name;
 
     private String img;
 
@@ -19,6 +18,32 @@ public class NotificationDTO {
     private long money;
 
     private long status;
+
+    private long id_answer;
+
+    public long getId_answer() {
+        return id_answer;
+    }
+
+    public void setId_answer(long id_answer) {
+        this.id_answer = id_answer;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public long getId() {
         return id;
@@ -52,14 +77,25 @@ public class NotificationDTO {
         this.status = status;
     }
 
+    public long getId_account() {
+        return id_account;
+    }
+
+    public void setId_account(long id_account) {
+        this.id_account = id_account;
+    }
+
     public NotificationDTO() {
     }
 
-    public NotificationDTO(long id, String img, LocalDate date, long money, long status) {
+    public NotificationDTO(long id, long id_account, String name, String img, LocalDate date, long money, long status, long id_answer) {
         this.id = id;
+        this.id_account = id_account;
+        this.name = name;
         this.img = img;
         this.date = date;
         this.money = money;
         this.status = status;
+        this.id_answer = id_answer;
     }
 }
