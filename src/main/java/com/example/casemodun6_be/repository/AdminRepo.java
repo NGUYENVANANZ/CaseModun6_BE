@@ -12,13 +12,14 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface AdminRepo extends JpaRepository<Account,Integer> {
+public interface AdminRepo extends JpaRepository<Account,Long> {
     @Query(value = "group by Account.account_id limit ?1,5;", nativeQuery = true)
     List<Account> getAllBy(int index);
 
     @Query(nativeQuery = true,value = "SELECT * from account")
     List<Account> getAll();
 
-    @Query(nativeQuery = true,value = "SELECT * from account where vip = : vip")
-    DetailAccount findByIdV(@Param("id") long vip);
+   @Query(nativeQuery = true, value = "SELECT * from dettailAccount where id = :id")
+   DetailAccount findByIdhi(@Param("id") long id);
+
 }

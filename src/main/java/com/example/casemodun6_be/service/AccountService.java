@@ -4,6 +4,7 @@ import com.example.casemodun6_be.model.Account;
 import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.model.Roles;
 import com.example.casemodun6_be.repository.AdminRepo;
+import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.repository.IAccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -23,6 +24,9 @@ public class AccountService implements UserDetailsService {
     @Autowired
     AdminRepo adminRepo;
 
+    @Autowired
+    DetailAccountRepo detailAccountRepo;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = iAccountRepo.findByUsername(username);
@@ -36,6 +40,10 @@ public class AccountService implements UserDetailsService {
         return (List<Account>) iAccountRepo.findAll();
     }
 
+    public DetailAccount save(DetailAccount detailAccount){
+        return detailAccountRepo.save(detailAccount);
+    }
+
     public Account findByName(String name) {
         return iAccountRepo.findByUsername(name);
     }
@@ -47,7 +55,13 @@ public class AccountService implements UserDetailsService {
         return iAccountRepo.findById(id);
     }
 
-    public DetailAccount finbyVip(long vip){
-        return adminRepo.findByIdV(vip);
-}
+    public DetailAccount finbyidhihi(long id){
+        return detailAccountRepo.findByViphihi(id);
+    }
+
+    public DetailAccount finbyVip(long vip, long account_id){
+        return detailAccountRepo.findByVip(vip,account_id);
+ }
+
+
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IAccountRepo extends CrudRepository<Account, Long> {
+
     @Query(nativeQuery = true,value = "SELECT * from account where phone_number = :phoneNumber")
     Account findByPhoneNumber(String phoneNumber);
 
