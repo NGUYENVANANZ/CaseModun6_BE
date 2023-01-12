@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface IProfileRepo extends CrudRepository<DetailAccount,Long> {
+    @Query(nativeQuery = true,value = "SELECT * from detail_account where id = :id")
+    DetailAccount showProfile(@Param("id")long id);
+
+
     @Query(nativeQuery = true,value = "SELECT * from detail_account where id = :id ORDER BY date DESC")
-    List<DetailAccount> showProfile(@Param("id")long id);
-
-
-    @Query(nativeQuery = true,value = "SELECT * from detail_account where detail_account_id = :id ORDER BY date DESC")
     DetailAccount getaccountdetail(long id);
     DetailAccount findByFullName(String fullName);
     DetailAccount findDetailAccountById(long id);

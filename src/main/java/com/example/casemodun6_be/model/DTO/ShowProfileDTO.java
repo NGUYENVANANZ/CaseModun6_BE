@@ -11,7 +11,6 @@ public class ShowProfileDTO {
     private  String fullName;
     private String img;
     private LocalDate birthday;
-    private long price;
     private String city;
     private String nation;
 
@@ -24,11 +23,14 @@ public class ShowProfileDTO {
     private String moTa;
     private String yeuCau;
 
-    public ShowProfileDTO(String fullName, String img, LocalDate birthday, long price, String city, String nation, String gender, double height, double weight, String soThich, String moTa, String yeuCau) {
+
+    public ShowProfileDTO() {
+    }
+
+    public ShowProfileDTO(String fullName, String img, LocalDate birthday, String city, String nation, String gender, double height, double weight, String soThich, String moTa, String yeuCau) {
         this.fullName = fullName;
         this.img = img;
         this.birthday = birthday;
-        this.price = price;
         this.city = city;
         this.nation = nation;
         this.gender = gender;

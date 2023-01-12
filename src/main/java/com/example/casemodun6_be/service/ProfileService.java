@@ -21,13 +21,11 @@ public class ProfileService {
     @Autowired
     IAccountRepo iAccountRepo;
 
-    public List<ShowProfileDTO> showProfile(long id) {
-        List<ShowProfileDTO> showProfileDTOS = new ArrayList<>();
-        List<DetailAccount> detailAccounts = iProfileRepo.showProfile(id);
+    public ShowProfileDTO showProfile(long id) {
+        DetailAccount d = iProfileRepo.showProfile(id);
+        ShowProfileDTO showProfileDTOS = new ShowProfileDTO(d.getFullName(),d.getImg(),d.getBirthday(),d.getCity(),d.getNation(),d.getGender(),d.getHeight(),d.getWeight(),d.getSoThich(),d.getMoTa(),d.getYeuCau());
 
-        for (DetailAccount d : detailAccounts) {
-            showProfileDTOS.add(new ShowProfileDTO(d.getFullName(),d.getImg(),d.getBirthday(),d.getMoney(),d.getCity(),d.getNation(),d.getGender(),d.getHeight(),d.getWeight(),d.getSoThich(),d.getMoTa(),d.getYeuCau()));
-        }
+
 
         return showProfileDTOS;
     }
@@ -38,12 +36,6 @@ public class ProfileService {
         return iProfileRepo.findDetailAccountById(id);
     }
 
-    public DetailAccount getaccountdetail(long id){
-        return iProfileRepo.getaccountdetail(id);
-    }
 
-    public Account findaccountbyussername(String username){
-        return iAccountRepo.findByUsername(username);
-    }
 
 }

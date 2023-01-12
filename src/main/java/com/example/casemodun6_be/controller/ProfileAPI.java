@@ -47,22 +47,23 @@ public class ProfileAPI {
     }
 
     @GetMapping("/showEdit")
-    public ResponseEntity<DetailAccount> showEdit() {
+    public ResponseEntity<ShowProfileDTO> showEdit() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Account account = profileService.findaccountbyussername(userDetails.getUsername());
-        DetailAccount detailAccount = profileService.getaccountdetail(account.getId());
-        return new ResponseEntity<>(detailAccount,HttpStatus.OK);
+        Account account = accountService.findByName(userDetails.getUsername());
+        ShowProfileDTO showProfileDTOS = profileService.showProfile(account.getId());
+        return new ResponseEntity<>(showProfileDTOS,HttpStatus.OK);
     }
 
-    @PutMapping("/editDetailAccount")
-    public ResponseEntity<DetailAccount> editProfile(@RequestBody ShowProfileDTO showProfileDTO){
+    @PostMapping("/editProfile")
+    public ResponseEntity<ShowProfileDTO> editProfile(@RequestBody ShowProfileDTO showProfileDTO){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        DetailAccount detailAccount1 = profileService.detailAccount(userDetails.getUsername());
+        Account account = accountService.findByName(userDetails.getUsername());
+
+        DetailAccount detailAccount1 = profileService.detailAccount(account.getId());
 
         detailAccount1.setFullName(showProfileDTO.getFullName());
         detailAccount1.setImg(showProfileDTO.getImg());
         detailAccount1.setBirthday(showProfileDTO.getBirthday());
-        detailAccount1.setMoney(showProfileDTO.getPrice());
         detailAccount1.setCity(showProfileDTO.getCity());
         detailAccount1.setNation(showProfileDTO.getNation());
         detailAccount1.setGender(showProfileDTO.getGender());
@@ -73,7 +74,9 @@ public class ProfileAPI {
         detailAccount1.setYeuCau(showProfileDTO.getYeuCau());
 
         iProfileRepo.save(detailAccount1);
-        return new ResponseEntity<>(detailAccount1,HttpStatus.OK);
+
+        ShowProfileDTO showProfileDTO1 = profileService.showProfile(account.getId());
+        return new ResponseEntity<>(showProfileDTO1,HttpStatus.OK);
     }
 
 
