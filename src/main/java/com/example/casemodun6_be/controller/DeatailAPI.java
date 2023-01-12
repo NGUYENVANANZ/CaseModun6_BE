@@ -8,12 +8,10 @@ import com.example.casemodun6_be.service.EmployService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -29,6 +27,7 @@ public class DeatailAPI {
         DetailAccount detailAccount = detailAccountRepo.findById(id).get();
         return new ResponseEntity<>(detailAccount, HttpStatus.OK);
     }
+
 
     @GetMapping("/hires/{id}")
     public ResponseEntity<Hires> detailHires(@PathVariable long id) {
