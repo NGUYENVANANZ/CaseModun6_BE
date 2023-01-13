@@ -145,6 +145,7 @@ public class AccountAPI {
     }
 
     @PostMapping("/register")
+<<<<<<< HEAD
     public ResponseEntity<List<Boolean>> register(@RequestBody SignUpForm signUpForm) {
         List<Boolean> result = new ArrayList<>();
         Account account = new Account();
@@ -178,6 +179,27 @@ public class AccountAPI {
             result.add(checkMail);
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
+=======
+    public ResponseEntity<Account> register(@RequestBody SignUpForm signUpForm) {
+        DetailAccount detailAccount1 = new DetailAccount();
+        detailAccount1.setGender(signUpForm.getGender());
+        detailAccount1.setBirthday(signUpForm.getBirthDay());
+
+        List<Roles> roles = new ArrayList<>();
+        roles.add(rolesRepo.findById(2L).get());
+        detailAccount1.setRoles(roles);
+
+        detailAccountRepo.save(detailAccount1);
+
+        Account account = new Account();
+        account.setUsername(signUpForm.getUserName());
+        account.setEmail(signUpForm.getEmail());
+        account.setPassword(signUpForm.getPassword());
+        account.setPhoneNumber(signUpForm.getPhoneNumber());
+        account.setDetailAccount(detailAccount1);
+        account.setStatus(1);
+        iAccountRepo.save(account);
+>>>>>>> f9acd2bda97b5484ff02705466769a21a3061c17
 
     }
 
