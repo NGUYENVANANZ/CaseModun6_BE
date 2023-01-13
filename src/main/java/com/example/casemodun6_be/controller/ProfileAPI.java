@@ -72,7 +72,13 @@ public class ProfileAPI {
         detailAccount1.setSoThich(showProfileDTO.getSoThich());
         detailAccount1.setMoTa(showProfileDTO.getMoTa());
         detailAccount1.setYeuCau(showProfileDTO.getYeuCau());
-
+        detailAccount1.setMoney(showProfileDTO.getMoney());
+        detailAccount1.setFaceLink(showProfileDTO.getFaceLink());
+        detailAccount1.setStatus(showProfileDTO.getStatus());
+        detailAccount1.setImgs(showProfileDTO.getImgs());
+        detailAccount1.setProvideds(showProfileDTO.getProvideds());
+        detailAccount1.setComments(showProfileDTO.getComments());
+        detailAccount1.setPricePerDay(showProfileDTO.getPricePerDay());
         iProfileRepo.save(detailAccount1);
 
         ShowProfileDTO showProfileDTO1 = profileService.showProfile(account.getId());

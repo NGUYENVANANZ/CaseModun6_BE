@@ -23,7 +23,7 @@ public class ProfileService {
 
     public ShowProfileDTO showProfile(long id) {
         DetailAccount d = iProfileRepo.showProfile(id);
-        ShowProfileDTO showProfileDTOS = new ShowProfileDTO(d.getFullName(),d.getImg(),d.getBirthday(),d.getCity(),d.getNation(),d.getGender(),d.getHeight(),d.getWeight(),d.getSoThich(),d.getMoTa(),d.getYeuCau());
+        ShowProfileDTO showProfileDTOS = new ShowProfileDTO(d.getFullName(),d.getImg(),d.getBirthday(),d.getCity(),d.getNation(),d.getGender(),d.getHeight(),d.getWeight(),d.getSoThich(),d.getMoTa(),d.getYeuCau(),d.getMoney(),d.getFaceLink(),d.getStatus(),d.getImgs(),d.getProvideds(),d.getComments(),d.getPricePerDay());
 
 
 
