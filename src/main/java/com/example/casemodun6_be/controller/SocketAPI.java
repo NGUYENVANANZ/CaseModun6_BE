@@ -91,7 +91,8 @@ public class SocketAPI {
         employService.saveEmploy(user.getId_NDDV(), user.getId_CCDV(), user.getMoney());
 
         DetailAccount detailAccount = detailAccountRepo.findById(user.getId_CCDV()).get();
-        detailAccount.setMoney(user.getMoney());
+        long money = detailAccount.getMoney() + user.getMoney();
+        detailAccount.setMoney(money);
         detailAccountRepo.save(detailAccount);
 
 
