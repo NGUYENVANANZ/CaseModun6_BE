@@ -5,12 +5,22 @@ import com.example.casemodun6_be.model.Roles;
 import java.util.List;
 
 public class UserToken {
+    private long id;
     private String userName;
     private String token;
     private List<Roles> roles;
     private  String img;
 
     private  long status;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -54,7 +64,8 @@ public class UserToken {
         this.img = img;
     }
 
-    public UserToken(String userName, String token, List<Roles> roles, String img, long status) {
+    public UserToken(long id, String userName, String token, List<Roles> roles, String img, long status) {
+        this.id = id;
         this.userName = userName;
         this.token = token;
         this.roles = roles;

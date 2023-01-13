@@ -4,8 +4,13 @@ import com.example.casemodun6_be.model.Account;
 import com.example.casemodun6_be.model.DTO.EmployDTO;
 import com.example.casemodun6_be.model.DTO.ShowProfileDTO;
 import com.example.casemodun6_be.model.DetailAccount;
+import com.example.casemodun6_be.model.Employ;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
+<<<<<<< HEAD
 import com.example.casemodun6_be.repository.IProfileRepo;
+=======
+import com.example.casemodun6_be.repository.EmployRepo;
+>>>>>>> 07b1ebc7cee085af03e1e2a92e7c76f891717936
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.EmployService;
 import com.example.casemodun6_be.service.ProfileService;
@@ -16,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -46,6 +52,7 @@ public class ProfileAPI {
         return new ResponseEntity<>(employDTOS, HttpStatus.OK);
     }
 
+<<<<<<< HEAD
     @GetMapping("/showEdit")
     public ResponseEntity<ShowProfileDTO> showEdit() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -84,6 +91,19 @@ public class ProfileAPI {
         ShowProfileDTO showProfileDTO1 = profileService.showProfile(account.getId());
         return new ResponseEntity<>(showProfileDTO1,HttpStatus.OK);
     }
+=======
+@GetMapping("/showAll1")
+public ResponseEntity<List<EmployDTO>> ShowAlls(){
+    List<Employ> dtos =  accountService.finallempoy();
+    List<EmployDTO> dtoList = new ArrayList<>();
+    for (int i = 0; i < dtos.size(); i++) {
+        dtoList.add(new EmployDTO(dtos.get(i).getDetailAccount().getFullName(),dtos.get(i).getDetailAccount().getImg(),dtos.get(i).getDate(),dtos.get(i).getMoney()));
+    }
+    return new ResponseEntity<>(dtoList, HttpStatus.OK);
+
+}
+
+>>>>>>> 07b1ebc7cee085af03e1e2a92e7c76f891717936
 
 
     @GetMapping("/editStatus1")
