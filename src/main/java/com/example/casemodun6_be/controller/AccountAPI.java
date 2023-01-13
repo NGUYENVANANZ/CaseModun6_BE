@@ -28,6 +28,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -159,7 +160,7 @@ public class AccountAPI {
         if(checkMail && checkUserName) {
             detailAccount1.setGender(signUpForm.getGender());
             detailAccount1.setBirthday(signUpForm.getBirthday());
-            detailAccount1.setJoinDate(LocalDate.now());
+            detailAccount1.setJoinDate(LocalDateTime.now());
 
             List<Roles> roles = new ArrayList<>();
             roles.add(rolesRepo.findById(2L).get());
