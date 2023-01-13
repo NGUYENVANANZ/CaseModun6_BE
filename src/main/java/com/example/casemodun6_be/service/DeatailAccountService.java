@@ -23,11 +23,13 @@ public class DeatailAccountService {
     @Autowired
     DetailAccountRepo detailAccountRepo;
 
+
     @Autowired
     EmployRepo employRepo;
 
     @Autowired
     ISearchRepo iSearchRepo;
+
     public List<DetailAccountSart> getAll() {
         return detailAccounts(detailAccountRepo.getAll());
     }

@@ -2,14 +2,14 @@ package com.example.casemodun6_be.controller;
 
 
 import com.example.casemodun6_be.model.Account;
-import com.example.casemodun6_be.model.DTO.DetailAccountSart;
-import com.example.casemodun6_be.model.DTO.Hires;
-import com.example.casemodun6_be.model.DTO.Sart;
-import com.example.casemodun6_be.model.DTO.UserToken;
+import com.example.casemodun6_be.model.DTO.*;
+import com.example.casemodun6_be.model.DTO.signup.SignUpForm;
 import com.example.casemodun6_be.model.DetailAccount;
+import com.example.casemodun6_be.model.Employ;
 import com.example.casemodun6_be.model.Roles;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.repository.IAccountRepo;
+import com.example.casemodun6_be.repository.RolesRepo;
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.DeatailAccountService;
 import com.example.casemodun6_be.service.JwtService;
@@ -40,6 +40,7 @@ public class AccountAPI {
 
     @Autowired
     DetailAccountRepo detailAccountRepo;
+
     @Autowired
     DeatailAccountService detailAccount;
 
@@ -51,6 +52,11 @@ public class AccountAPI {
 
     @Autowired
     IAccountRepo iAccountRepo;
+
+    @Autowired
+    RolesRepo rolesRepo;
+
+
 
     @PostMapping("/login")
     public ResponseEntity<UserToken> login(@RequestBody Account account) {
@@ -102,12 +108,12 @@ public class AccountAPI {
         return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
     }
 
-
     @GetMapping("/vip")
     public ResponseEntity<List<DetailAccountSart>> showVip() {
         List<DetailAccountSart> detailAccountSarts = detailAccount.showVip();
         return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
     }
+
 
     @GetMapping("/gender")
     public ResponseEntity<List<DetailAccountSart>> showGender() {
@@ -116,6 +122,7 @@ public class AccountAPI {
         List<DetailAccountSart> detailAccountSarts = detailAccount.showGender(account.getDetailAccount().getGender());
         return new ResponseEntity<>(detailAccountSarts, HttpStatus.OK);
     }
+
 
     @GetMapping("/star")
     public ResponseEntity<List<Sart>> showSart() {
@@ -130,8 +137,26 @@ public class AccountAPI {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Account> register(@RequestBody Account account) {
+    public ResponseEntity<Account> register(@RequestBody SignUpForm signUpForm) {
+        DetailAccount detailAccount1 = new DetailAccount();
+        detailAccount1.setGender(signUpForm.getGender());
+        detailAccount1.setBirthday(signUpForm.getBirthDay());
+
+        List<Roles> roles = new ArrayList<>();
+        roles.add(rolesRepo.findById(2L).get());
+        detailAccount1.setRoles(roles);
+
+        detailAccountRepo.save(detailAccount1);
+
+        Account account = new Account();
+        account.setUsername(signUpForm.getUserName());
+        account.setEmail(signUpForm.getEmail());
+        account.setPassword(signUpForm.getPassword());
+        account.setPhoneNumber(signUpForm.getPhoneNumber());
+        account.setDetailAccount(detailAccount1);
+        account.setStatus(1);
         iAccountRepo.save(account);
+
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
@@ -140,6 +165,7 @@ public class AccountAPI {
         List<DetailAccountSart> detailAccountList = detailAccount.getAll();
         return new ResponseEntity<>(detailAccountList, HttpStatus.OK);
     }
+
 
     @GetMapping("/detailAccount")
     public ResponseEntity<DetailAccount> detailAccount() {

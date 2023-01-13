@@ -4,7 +4,9 @@ import com.example.casemodun6_be.model.Account;
 import com.example.casemodun6_be.model.DTO.DetailAccountSart;
 import com.example.casemodun6_be.model.DTO.EmployDTO;
 import com.example.casemodun6_be.model.DetailAccount;
+import com.example.casemodun6_be.model.Employ;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
+import com.example.casemodun6_be.repository.EmployRepo;
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.EmployService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,6 +39,19 @@ public class ProfileAPI {
         List<EmployDTO> employDTOS = employService.showEmloy(account.getId());
         return new ResponseEntity<>(employDTOS, HttpStatus.OK);
     }
+
+@GetMapping("/showAll1")
+public ResponseEntity<List<EmployDTO>> ShowAlls(){
+    List<Employ> dtos =  accountService.finallempoy();
+    List<EmployDTO> dtoList = new ArrayList<>();
+    for (int i = 0; i < dtos.size(); i++) {
+        dtoList.add(new EmployDTO(dtos.get(i).getDetailAccount().getFullName(),dtos.get(i).getDetailAccount().getImg(),dtos.get(i).getDate(),dtos.get(i).getMoney()));
+    }
+    return new ResponseEntity<>(dtoList, HttpStatus.OK);
+
+}
+
+
 
     @GetMapping("/editStatus1")
     public ResponseEntity<DetailAccount> editStatus1() {
@@ -86,4 +102,5 @@ public class ProfileAPI {
         detailAccountRepo.save(detailAccount);
         return new ResponseEntity<>(detailAccount ,HttpStatus.OK);
     }
+
 }
