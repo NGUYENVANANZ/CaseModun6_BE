@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ public class DetailAccount {
     private String yeuCau;
 
     private String fullName;
-    private LocalDate birthday;
+    private Date birthday;
     private LocalDate joinDate;
     private long money;
 

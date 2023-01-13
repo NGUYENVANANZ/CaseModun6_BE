@@ -6,6 +6,7 @@ import com.example.casemodun6_be.model.DTO.DetailAccountSart;
 import com.example.casemodun6_be.model.DTO.Hires;
 import com.example.casemodun6_be.model.DTO.Sart;
 import com.example.casemodun6_be.model.DTO.UserToken;
+import com.example.casemodun6_be.model.DTO.signup.GenderDTO;
 import com.example.casemodun6_be.model.DTO.signup.SignUpForm;
 import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.model.Roles;
@@ -15,6 +16,7 @@ import com.example.casemodun6_be.repository.RolesRepo;
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.DeatailAccountService;
 import com.example.casemodun6_be.service.JwtService;
+import com.example.casemodun6_be.service.SendMailService;
 import com.example.casemodun6_be.service.search.IAccountServiceSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.Role;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -59,6 +62,8 @@ public class AccountAPI {
 
     @Autowired
     RolesRepo rolesRepo;
+    @Autowired
+    SendMailService sendMailService;
 
 
     @PostMapping("/login")
@@ -140,28 +145,40 @@ public class AccountAPI {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Account> register(@RequestBody SignUpForm signUpForm) {
-        DetailAccount detailAccount1 = new DetailAccount();
-        detailAccount1.setGender(signUpForm.getGender());
-        detailAccount1.setBirthday(signUpForm.getBirthDay());
-
-        List<Roles> roles = new ArrayList<>();
-        roles.add(rolesRepo.findById(2L).get());
-        detailAccount1.setRoles(roles);
-
-        detailAccountRepo.save(detailAccount1);
-
+    public ResponseEntity<List<Boolean>> register(@RequestBody SignUpForm signUpForm) {
+        List<Boolean> result = new ArrayList<>();
         Account account = new Account();
-        account.setUsername(signUpForm.getUserName());
-        account.setEmail(signUpForm.getEmail());
-        account.setPassword(signUpForm.getPassword());
-        account.setPhoneNumber(signUpForm.getPhoneNumber());
-        account.setDetailAccount(detailAccount1);
-        account.setStatus(1);
-    public ResponseEntity<Account> register(@RequestBody Account account) {
-        iAccountRepo.save(account);
+        DetailAccount detailAccount1 = new DetailAccount();
 
-        return new ResponseEntity<>(account, HttpStatus.OK);
+        Account appUserByEmail = accountService.findByEmail(signUpForm.getEmail());
+        Account appUserByName = accountService.findByName(signUpForm.getUsername());
+        boolean checkUserName = appUserByName == null;
+        boolean checkMail = appUserByEmail == null;
+
+        if(checkMail && checkUserName) {
+            detailAccount1.setGender(signUpForm.getGender());
+            detailAccount1.setBirthday(signUpForm.getBirthday());
+            detailAccount1.setJoinDate(LocalDate.now());
+
+            List<Roles> roles = new ArrayList<>();
+            roles.add(rolesRepo.findById(2L).get());
+            detailAccount1.setRoles(roles);
+
+            detailAccountRepo.save(detailAccount1);
+            account.setUsername(signUpForm.getUsername());
+            account.setEmail(signUpForm.getEmail());
+            account.setPassword(signUpForm.getPassword());
+            account.setPhoneNumber(signUpForm.getPhoneNumber());
+            account.setDetailAccount(detailAccount1);
+            account.setStatus(1);
+            iAccountRepo.save(account);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }else {
+            result.add(checkUserName);
+            result.add(checkMail);
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @GetMapping("/showAll")
@@ -176,4 +193,19 @@ public class AccountAPI {
         Account account = accountService.findByName(userDetails.getUsername());
         return new ResponseEntity<>(account.getDetailAccount(), HttpStatus.OK);
     }
+    @GetMapping("/showDetailAccountbygender/{gender}")
+    public ResponseEntity<?> gender(@PathVariable String gender) {
+        return new ResponseEntity<>(detailAccountRepo.findAllDetailGender(gender), HttpStatus.OK);
+    }
+    @GetMapping("/showallgender")
+    public ResponseEntity<?> allgender() {
+        List<String> genders = detailAccountRepo.findAllGender();
+        List<GenderDTO> genderDTOS = new ArrayList<>();
+        for (int i = 0; i < genders.size(); i++) {
+            GenderDTO genderDTO  = new GenderDTO(i+1,genders.get(i));
+            genderDTOS.add(genderDTO);
+        }
+        return new ResponseEntity<>(genderDTOS, HttpStatus.OK);
+    }
+
 }

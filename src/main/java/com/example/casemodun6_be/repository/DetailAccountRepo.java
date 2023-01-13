@@ -24,4 +24,9 @@ public interface DetailAccountRepo extends CrudRepository<DetailAccount, Long> {
 
     @Query(nativeQuery = true,value = "SELECT * FROM detail_account where status = 1 ORDER BY join_date DESC")
     List<DetailAccount> getAll();
+    @Query(nativeQuery = true,value = "SELECT * FROM detail_account where gender =:gender and status = 1 ")
+    List<DetailAccount> findAllDetailGender(String gender);
+
+    @Query(nativeQuery = true,value = "SELECT distinct gender FROM detail_account where  status = 1 ")
+    List<String> findAllGender();
 }
