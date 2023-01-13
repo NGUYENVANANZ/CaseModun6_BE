@@ -29,6 +29,7 @@ public class DeatailAccountService {
 
     @Autowired
     ISearchRepo iSearchRepo;
+
     public List<DetailAccountSart> getAll() {
         return detailAccounts(detailAccountRepo.getAll());
     }
@@ -183,9 +184,4 @@ public class DeatailAccountService {
         }
         return provideds1;
     }
-
-
-
-
-
 }

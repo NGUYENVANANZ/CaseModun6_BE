@@ -4,6 +4,7 @@ import com.example.casemodun6_be.model.Account;
 import com.example.casemodun6_be.model.DTO.AccountDTO;
 import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.model.Roles;
+import com.example.casemodun6_be.repository.AdminRepo;
 import com.example.casemodun6_be.repository.IAccountRepo;
 import com.example.casemodun6_be.repository.IRoleRepo;
 import com.example.casemodun6_be.service.AccountService;
@@ -33,6 +34,22 @@ public class AdminAPI {
     @Autowired
     IRoleRepo iRoleRepo;
 
+    @Autowired
+    AdminRepo adminRepo;
+
+    @GetMapping("/VipProMax/{vip}/{id}")
+    public ResponseEntity<?> vip(@PathVariable long vip, @PathVariable long id) {
+        DetailAccount detailAccount1 = accountService.finbyVip(vip, id);
+        if (vip == 0) {
+            detailAccount1.setVip(1);
+            accountService.save(detailAccount1);
+        } else if (vip == 1) {
+            detailAccount1.setVip(0);
+            accountService.save(detailAccount1);
+        }
+        return new ResponseEntity<>(detailAccount1, HttpStatus.OK);
+    }
+
     @GetMapping("/lock/{id}")
     public ResponseEntity<List<AccountDTO>> lockroles2(@PathVariable long id) {
         Account account = accountService.finbyid(id);
@@ -43,14 +60,14 @@ public class AdminAPI {
         for (int i = 0; i < accounts.size(); i++) {
             List<Roles> roles = accounts.get(i).getDetailAccount().getRoles();
             for (int j = 0; j < roles.size(); j++) {
-                if(accounts.get(i).getDetailAccount().getRoles().get(j).getId()==2){
+                if (accounts.get(i).getDetailAccount().getRoles().get(j).getId() == 2) {
                     accounts1.add(accounts.get(i));
                 }
             }
         }
         List<AccountDTO> dtos = new ArrayList<>();
         for (int i = 0; i < accounts1.size(); i++) {
-            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(),accounts1.get(i).getDetailAccount().getImg(),accounts1.get(i).getDetailAccount().getFullName(),accounts1.get(i).getDetailAccount().getMoTa(),accounts1.get(i).getStatus());
+            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(), accounts1.get(i).getDetailAccount().getImg(), accounts1.get(i).getDetailAccount().getFullName(), accounts1.get(i).getDetailAccount().getMoTa(), accounts1.get(i).getStatus(), accounts1.get(i).getDetailAccount().getVip(), accounts1.get(i).getDetailAccount(), accounts1.get(i).getDetailAccount().getMoney());
             dtos.add(accountDTO);
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
@@ -67,14 +84,14 @@ public class AdminAPI {
         for (int i = 0; i < accounts.size(); i++) {
             List<Roles> roles = accounts.get(i).getDetailAccount().getRoles();
             for (int j = 0; j < roles.size(); j++) {
-                if(accounts.get(i).getDetailAccount().getRoles().get(j).getId()==2){
+                if (accounts.get(i).getDetailAccount().getRoles().get(j).getId() == 2) {
                     accounts1.add(accounts.get(i));
                 }
             }
         }
         List<AccountDTO> dtos = new ArrayList<>();
         for (int i = 0; i < accounts1.size(); i++) {
-            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(),accounts1.get(i).getDetailAccount().getImg(),accounts1.get(i).getDetailAccount().getFullName(),accounts1.get(i).getDetailAccount().getMoTa(),accounts1.get(i).getStatus());
+            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(), accounts1.get(i).getDetailAccount().getImg(), accounts1.get(i).getDetailAccount().getFullName(), accounts1.get(i).getDetailAccount().getMoTa(), accounts1.get(i).getStatus(), accounts1.get(i).getDetailAccount().getVip(), accounts1.get(i).getDetailAccount(), accounts1.get(i).getDetailAccount().getMoney());
             dtos.add(accountDTO);
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
@@ -98,7 +115,7 @@ public class AdminAPI {
         }
         List<AccountDTO> dtos = new ArrayList<>();
         for (int i = 0; i < accounts1.size(); i++) {
-            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(),accounts1.get(i).getDetailAccount().getImg(),accounts1.get(i).getDetailAccount().getFullName(),accounts1.get(i).getDetailAccount().getMoTa(),accounts1.get(i).getStatus());
+            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(), accounts1.get(i).getDetailAccount().getImg(), accounts1.get(i).getDetailAccount().getFullName(), accounts1.get(i).getDetailAccount().getMoTa(), accounts1.get(i).getStatus(), accounts1.get(i).getDetailAccount().getVip(), accounts1.get(i).getDetailAccount(), accounts1.get(i).getDetailAccount().getMoney());
             dtos.add(accountDTO);
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
@@ -122,7 +139,7 @@ public class AdminAPI {
         }
         List<AccountDTO> dtos = new ArrayList<>();
         for (int i = 0; i < accounts1.size(); i++) {
-            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(),accounts1.get(i).getDetailAccount().getImg(),accounts1.get(i).getDetailAccount().getFullName(),accounts1.get(i).getDetailAccount().getMoTa(),accounts1.get(i).getStatus());
+            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(), accounts1.get(i).getDetailAccount().getImg(), accounts1.get(i).getDetailAccount().getFullName(), accounts1.get(i).getDetailAccount().getMoTa(), accounts1.get(i).getStatus(), accounts1.get(i).getDetailAccount().getVip(), accounts1.get(i).getDetailAccount(), accounts1.get(i).getDetailAccount().getMoney());
             dtos.add(accountDTO);
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
@@ -135,6 +152,7 @@ public class AdminAPI {
         return new ResponseEntity<>(detailAccount1, HttpStatus.OK);
     }
 
+
     @GetMapping("/GetallAccountByRoles2")
     public ResponseEntity<List<AccountDTO>> Accounts() {
         List<Account> accounts = accountService.getAll();
@@ -142,14 +160,14 @@ public class AdminAPI {
         for (int i = 0; i < accounts.size(); i++) {
             List<Roles> roles = accounts.get(i).getDetailAccount().getRoles();
             for (int j = 0; j < roles.size(); j++) {
-                if(accounts.get(i).getDetailAccount().getRoles().get(j).getId()==2){
+                if (accounts.get(i).getDetailAccount().getRoles().get(j).getId() == 2) {
                     accounts1.add(accounts.get(i));
                 }
             }
         }
         List<AccountDTO> dtos = new ArrayList<>();
         for (int i = 0; i < accounts1.size(); i++) {
-            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(),accounts1.get(i).getDetailAccount().getImg(),accounts1.get(i).getDetailAccount().getFullName(),accounts1.get(i).getDetailAccount().getMoTa(),accounts1.get(i).getStatus());
+            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(), accounts1.get(i).getDetailAccount().getImg(), accounts1.get(i).getDetailAccount().getFullName(), accounts1.get(i).getDetailAccount().getMoTa(), accounts1.get(i).getStatus(), accounts1.get(i).getDetailAccount().getVip(), accounts1.get(i).getDetailAccount(), accounts1.get(i).getDetailAccount().getMoney());
             dtos.add(accountDTO);
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
@@ -162,16 +180,26 @@ public class AdminAPI {
         for (int i = 0; i < accounts.size(); i++) {
             List<Roles> roles = accounts.get(i).getDetailAccount().getRoles();
             for (int j = 0; j < roles.size(); j++) {
-                if(accounts.get(i).getDetailAccount().getRoles().get(j).getId()==3){
+                if (accounts.get(i).getDetailAccount().getRoles().get(j).getId() == 3) {
                     accounts1.add(accounts.get(i));
                 }
             }
         }
         List<AccountDTO> dtos = new ArrayList<>();
         for (int i = 0; i < accounts1.size(); i++) {
-            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(),accounts1.get(i).getDetailAccount().getImg(),accounts1.get(i).getDetailAccount().getFullName(),accounts1.get(i).getDetailAccount().getMoTa(),accounts1.get(i).getStatus());
+            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(), accounts1.get(i).getDetailAccount().getImg(), accounts1.get(i).getDetailAccount().getFullName(), accounts1.get(i).getDetailAccount().getMoTa(), accounts1.get(i).getStatus(), accounts1.get(i).getDetailAccount().getVip(), accounts1.get(i).getDetailAccount(), accounts1.get(i).getDetailAccount().getMoney());
             dtos.add(accountDTO);
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/recharge/{id}/{money}")
+    public ResponseEntity<?> NapTien(@PathVariable long id, @PathVariable long money) {
+        DetailAccount detailAccount1 = accountService.finbyidhihi(id);
+        long Moneyhihi = detailAccount1.getMoney();
+             Moneyhihi += money;
+            detailAccount1.setMoney(Moneyhihi);
+            accountService.save(detailAccount1);
+        return new ResponseEntity<>(detailAccount1, HttpStatus.OK);
     }
 }

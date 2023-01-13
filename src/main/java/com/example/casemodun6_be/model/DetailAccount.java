@@ -1,9 +1,11 @@
 package com.example.casemodun6_be.model;
 
+import com.example.casemodun6_be.model.DTO.AccountDTO;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -27,10 +29,9 @@ public class DetailAccount {
     private String yeuCau;
 
     private String fullName;
-    private LocalDate birthday;
+    private Date birthday;
     private LocalDate joinDate;
     private long money;
-
     private String img;
 
     @OneToMany
@@ -43,11 +44,8 @@ public class DetailAccount {
     private List<Comment> comments;
 
     private long pricePerDay;
-
     private String faceLink;
-
     private long status;
-
     private long vip;
 
     @ManyToMany(fetch = FetchType.EAGER)

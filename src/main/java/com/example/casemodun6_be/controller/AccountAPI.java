@@ -2,12 +2,18 @@ package com.example.casemodun6_be.controller;
 
 
 import com.example.casemodun6_be.model.Account;
+<<<<<<< HEAD
+import com.example.casemodun6_be.model.DTO.*;
+=======
 import com.example.casemodun6_be.model.DTO.DetailAccountSart;
 import com.example.casemodun6_be.model.DTO.Hires;
 import com.example.casemodun6_be.model.DTO.Sart;
 import com.example.casemodun6_be.model.DTO.UserToken;
+import com.example.casemodun6_be.model.DTO.signup.GenderDTO;
+>>>>>>> e0bc13531b50f46a12f22358c25b08db6a779c83
 import com.example.casemodun6_be.model.DTO.signup.SignUpForm;
 import com.example.casemodun6_be.model.DetailAccount;
+import com.example.casemodun6_be.model.Employ;
 import com.example.casemodun6_be.model.Roles;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.repository.IAccountRepo;
@@ -15,6 +21,7 @@ import com.example.casemodun6_be.repository.RolesRepo;
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.DeatailAccountService;
 import com.example.casemodun6_be.service.JwtService;
+import com.example.casemodun6_be.service.SendMailService;
 import com.example.casemodun6_be.service.search.IAccountServiceSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,11 +33,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+<<<<<<< HEAD
+=======
 import javax.management.relation.Role;
+import java.time.LocalDate;
+>>>>>>> e0bc13531b50f46a12f22358c25b08db6a779c83
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @RestController
@@ -45,6 +54,7 @@ public class AccountAPI {
 
     @Autowired
     DetailAccountRepo detailAccountRepo;
+
     @Autowired
     DeatailAccountService detailAccount;
 
@@ -59,6 +69,9 @@ public class AccountAPI {
 
     @Autowired
     RolesRepo rolesRepo;
+    @Autowired
+    SendMailService sendMailService;
+
 
 
     @PostMapping("/login")
@@ -143,6 +156,41 @@ public class AccountAPI {
     }
 
     @PostMapping("/register")
+<<<<<<< HEAD
+    public ResponseEntity<List<Boolean>> register(@RequestBody SignUpForm signUpForm) {
+        List<Boolean> result = new ArrayList<>();
+        Account account = new Account();
+        DetailAccount detailAccount1 = new DetailAccount();
+
+        Account appUserByEmail = accountService.findByEmail(signUpForm.getEmail());
+        Account appUserByName = accountService.findByName(signUpForm.getUsername());
+        boolean checkUserName = appUserByName == null;
+        boolean checkMail = appUserByEmail == null;
+
+        if(checkMail && checkUserName) {
+            detailAccount1.setGender(signUpForm.getGender());
+            detailAccount1.setBirthday(signUpForm.getBirthday());
+            detailAccount1.setJoinDate(LocalDate.now());
+
+            List<Roles> roles = new ArrayList<>();
+            roles.add(rolesRepo.findById(2L).get());
+            detailAccount1.setRoles(roles);
+
+            detailAccountRepo.save(detailAccount1);
+            account.setUsername(signUpForm.getUsername());
+            account.setEmail(signUpForm.getEmail());
+            account.setPassword(signUpForm.getPassword());
+            account.setPhoneNumber(signUpForm.getPhoneNumber());
+            account.setDetailAccount(detailAccount1);
+            account.setStatus(1);
+            iAccountRepo.save(account);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }else {
+            result.add(checkUserName);
+            result.add(checkMail);
+            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+=======
     public ResponseEntity<Account> register(@RequestBody SignUpForm signUpForm) {
         DetailAccount detailAccount1 = new DetailAccount();
         detailAccount1.setGender(signUpForm.getGender());
@@ -162,8 +210,8 @@ public class AccountAPI {
         account.setDetailAccount(detailAccount1);
         account.setStatus(1);
         iAccountRepo.save(account);
+>>>>>>> f9acd2bda97b5484ff02705466769a21a3061c17
 
-        return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @GetMapping("/showAll")
@@ -172,10 +220,30 @@ public class AccountAPI {
         return new ResponseEntity<>(detailAccountList, HttpStatus.OK);
     }
 
+
     @GetMapping("/detailAccount")
     public ResponseEntity<DetailAccount> detailAccount() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = accountService.findByName(userDetails.getUsername());
         return new ResponseEntity<>(account.getDetailAccount(), HttpStatus.OK);
     }
+<<<<<<< HEAD
 }
+=======
+    @GetMapping("/showDetailAccountbygender/{gender}")
+    public ResponseEntity<?> gender(@PathVariable String gender) {
+        return new ResponseEntity<>(detailAccountRepo.findAllDetailGender(gender), HttpStatus.OK);
+    }
+    @GetMapping("/showallgender")
+    public ResponseEntity<?> allgender() {
+        List<String> genders = detailAccountRepo.findAllGender();
+        List<GenderDTO> genderDTOS = new ArrayList<>();
+        for (int i = 0; i < genders.size(); i++) {
+            GenderDTO genderDTO  = new GenderDTO(i+1,genders.get(i));
+            genderDTOS.add(genderDTO);
+        }
+        return new ResponseEntity<>(genderDTOS, HttpStatus.OK);
+    }
+
+}
+>>>>>>> e0bc13531b50f46a12f22358c25b08db6a779c83

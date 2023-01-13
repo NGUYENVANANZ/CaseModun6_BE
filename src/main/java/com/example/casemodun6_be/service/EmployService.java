@@ -6,7 +6,6 @@ import com.example.casemodun6_be.model.DTO.EmployDTO;
 import com.example.casemodun6_be.model.DTO.Hires;
 import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.model.Employ;
-import com.example.casemodun6_be.model.Provided;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.repository.EmployRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,4 +70,5 @@ public class EmployService {
         employ.setHires(1);
         employRepo.save(employ);
     }
+
 }
