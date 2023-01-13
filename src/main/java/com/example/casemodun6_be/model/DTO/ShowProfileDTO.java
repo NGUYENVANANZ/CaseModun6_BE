@@ -17,7 +17,7 @@ import java.util.List;
 public class ShowProfileDTO {
     private  String fullName;
     private String img;
-    private Date birthday;
+    private LocalDate birthday;
     private String city;
     private String nation;
 
@@ -47,7 +47,7 @@ public class ShowProfileDTO {
     public ShowProfileDTO() {
     }
 
-    public ShowProfileDTO(String fullName, String img, Date birthday, String city, String nation, String gender, double height, double weight, String soThich, String moTa, String yeuCau, long money, String faceLink, long status, List<Img> imgs, List<Provided> provideds, List<Comment> comments, long pricePerDay) {
+    public ShowProfileDTO(String fullName, String img, LocalDate birthday, String city, String nation, String gender, double height, double weight, String soThich, String moTa, String yeuCau, long money, String faceLink, long status, List<Img> imgs, List<Provided> provideds, List<Comment> comments, long pricePerDay) {
         this.fullName = fullName;
         this.img = img;
         this.birthday = birthday;
