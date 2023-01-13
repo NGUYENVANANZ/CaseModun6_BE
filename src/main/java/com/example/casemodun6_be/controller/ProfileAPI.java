@@ -6,11 +6,7 @@ import com.example.casemodun6_be.model.DTO.ShowProfileDTO;
 import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.model.Employ;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
-<<<<<<< HEAD
 import com.example.casemodun6_be.repository.IProfileRepo;
-=======
-import com.example.casemodun6_be.repository.EmployRepo;
->>>>>>> 07b1ebc7cee085af03e1e2a92e7c76f891717936
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.EmployService;
 import com.example.casemodun6_be.service.ProfileService;
@@ -52,7 +48,6 @@ public class ProfileAPI {
         return new ResponseEntity<>(employDTOS, HttpStatus.OK);
     }
 
-<<<<<<< HEAD
     @GetMapping("/showEdit")
     public ResponseEntity<ShowProfileDTO> showEdit() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -91,7 +86,6 @@ public class ProfileAPI {
         ShowProfileDTO showProfileDTO1 = profileService.showProfile(account.getId());
         return new ResponseEntity<>(showProfileDTO1,HttpStatus.OK);
     }
-=======
 @GetMapping("/showAll1")
 public ResponseEntity<List<EmployDTO>> ShowAlls(){
     List<Employ> dtos =  accountService.finallempoy();
@@ -103,7 +97,6 @@ public ResponseEntity<List<EmployDTO>> ShowAlls(){
 
 }
 
->>>>>>> 07b1ebc7cee085af03e1e2a92e7c76f891717936
 
 
     @GetMapping("/editStatus1")
