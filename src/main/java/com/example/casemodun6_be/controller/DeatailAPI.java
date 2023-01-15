@@ -37,9 +37,5 @@ public class DeatailAPI {
         Hires hires = employService.returnEmploy(id);
         return new ResponseEntity<>(hires, HttpStatus.OK);
     }
-    @GetMapping("/ShowComment")
-    public ResponseEntity<?> showComments(@PathVariable long detail_account_id){
-      List<Comment> comments = detailAccountRepo.finAllComt(detail_account_id);
-      return new ResponseEntity<>(comments, HttpStatus.OK);
-    }
+
 }
