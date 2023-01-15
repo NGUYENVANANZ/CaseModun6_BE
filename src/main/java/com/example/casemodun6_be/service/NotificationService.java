@@ -91,4 +91,38 @@ public class NotificationService {
         NotificationDTO notificationDTO = new NotificationDTO(notification.getId(), notification.getAccountSend().getId(), notification.getAccount().getDetailAccount().getFullName(), notification.getAccountSend().getDetailAccount().getImg(), notification.getDate(), notification.getMoney(), notification.getStatus(), notification.getId_answer());
         return notificationDTO;
     }
+
+    public NotificationDTO newStatus7(long id_NDDV, long id_CCDV, long id_answer, long money) {
+        Account account = accountService.finbyid(id_NDDV);
+        Account account1 = accountService.finbyid(id_CCDV);
+        Notification notification = new Notification();
+        notification.setAccount(account1);
+        notification.setAccountSend(account);
+        notification.setMoney(money);
+        notification.setDate(LocalDate.now());
+        notification.setStatus(7);
+        notification.setId_answer(id_answer);
+        notificationRepo.save(notification);
+        NotificationDTO notificationDTO = new NotificationDTO(notification.getId(), notification.getAccountSend().getId(), notification.getAccount().getDetailAccount().getFullName(), notification.getAccountSend().getDetailAccount().getImg(), notification.getDate(), notification.getMoney(), notification.getStatus(), notification.getId_answer());
+        return notificationDTO;
+    }
+
+
+    public NotificationDTO setStatus7(long id) {
+        Notification notification = notificationRepo.findById(id).get();
+        notification.setStatus(7);
+        notificationRepo.save(notification);
+        NotificationDTO notificationDTO = new NotificationDTO(notification.getId(), notification.getAccountSend().getId(), notification.getAccount().getDetailAccount().getFullName(), notification.getAccountSend().getDetailAccount().getImg(), notification.getDate(), notification.getMoney(), notification.getStatus(), notification.getId_answer());
+        return notificationDTO;
+    }
+
+    public NotificationDTO setStatus8(long id) {
+        Notification notification = notificationRepo.findById(id).get();
+        notification.setStatus(8);
+        notificationRepo.save(notification);
+        NotificationDTO notificationDTO = new NotificationDTO(notification.getId(), notification.getAccountSend().getId(), notification.getAccount().getDetailAccount().getFullName(), notification.getAccountSend().getDetailAccount().getImg(), notification.getDate(), notification.getMoney(), notification.getStatus(), notification.getId_answer());
+        return notificationDTO;
+    }
+
+
 }
