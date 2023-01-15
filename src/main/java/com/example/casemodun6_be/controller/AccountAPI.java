@@ -16,7 +16,7 @@ import com.example.casemodun6_be.repository.RolesRepo;
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.DeatailAccountService;
 import com.example.casemodun6_be.service.JwtService;
-import com.example.casemodun6_be.service.SendMailService;
+//import com.example.casemodun6_be.service.SendMailService;
 import com.example.casemodun6_be.service.search.IAccountServiceSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,8 +60,8 @@ public class AccountAPI {
 
     @Autowired
     RolesRepo rolesRepo;
-    @Autowired
-    SendMailService sendMailService;
+//    @Autowired
+//    SendMailService sendMailService;
 
 
 
@@ -77,7 +77,7 @@ public class AccountAPI {
             if (userToken.getStatus() == 0){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>(userToken, HttpStatus.OK);
+            return new ResponseEntity<>(userToken   , HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -161,7 +161,6 @@ public class AccountAPI {
             detailAccount1.setGender(signUpForm.getGender());
             detailAccount1.setBirthday(signUpForm.getBirthday());
             detailAccount1.setJoinDate(LocalDateTime.now());
-
             List<Roles> roles = new ArrayList<>();
             roles.add(rolesRepo.findById(2L).get());
             detailAccount1.setRoles(roles);
@@ -210,5 +209,6 @@ public class AccountAPI {
         }
         return new ResponseEntity<>(genderDTOS, HttpStatus.OK);
     }
+
 
 }

@@ -2,6 +2,7 @@ package com.example.casemodun6_be.repository;
 
 
 import com.example.casemodun6_be.model.Account;
+import com.example.casemodun6_be.model.Comment;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +18,5 @@ public interface IAccountRepo extends CrudRepository<Account, Long> {
 
     @Query(nativeQuery = true,value = "SELECT * from account where id = :id")
     Account findById(@Param("id") long id);
+
 }
