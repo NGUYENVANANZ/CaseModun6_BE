@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.List;
 
 @RestController
@@ -35,11 +36,11 @@ public class SearchAPI {
     @GetMapping("/searchFilter")
     public ResponseEntity<Iterable<DetailAccount>> searchByAll(@RequestParam(name = "status") long status,
                                                                @RequestParam(name = "gender") String gender,
-                                                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate birthday,
+                                                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Year birthday,
                                                                @RequestParam(name = "city") String city,
                                                                @RequestParam(name = "hires") long hires
     ) {
         return new ResponseEntity<>(
-                accountServiceSearch.searchByAll(status,gender, birthday, city, hires), HttpStatus.OK);
+                accountServiceSearch.searchByAll(status,gender, LocalDate.from(birthday), city, hires), HttpStatus.OK);
     }
 }

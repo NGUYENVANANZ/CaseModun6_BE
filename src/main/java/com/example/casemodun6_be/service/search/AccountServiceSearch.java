@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.List;
 
 @Service
@@ -32,7 +33,7 @@ public class AccountServiceSearch implements IAccountServiceSearch {
             LocalDate birthday,
             String city,
             long hires) {
-        return iSearchRepo.searchByAll(status,gender, birthday, city, hires);
+        return iSearchRepo.searchByAll(status,gender, Year.from(birthday), city, hires);
     }
 
 

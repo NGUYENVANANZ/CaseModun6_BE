@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.List;
 
 @Repository
@@ -24,7 +25,7 @@ public interface ISearchRepo extends PagingAndSortingRepository<DetailAccount,Lo
     )
     Iterable<DetailAccount> searchByAll(@Param("status") long status,
                                         @Param("gender") String gender,
-                                        @Param("birthday") LocalDate birthday,
+                                        @Param("birthday") Year birthday,
                                         @Param("city") String city,
                                         @Param("hires") long hires);
 }
