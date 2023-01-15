@@ -1,5 +1,6 @@
 package com.example.casemodun6_be.repository;
 
+import com.example.casemodun6_be.model.Comment;
 import com.example.casemodun6_be.model.DetailAccount;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -30,9 +31,13 @@ public interface DetailAccountRepo extends CrudRepository<DetailAccount, Long> {
 
     @Query(nativeQuery = true,value = "SELECT * from detail_account where id = :id")
     DetailAccount findByViphihi(long id);
+
     @Query(nativeQuery = true,value = "SELECT * FROM detail_account where gender =:gender and status = 1 ")
     List<DetailAccount> findAllDetailGender(String gender);
 
     @Query(nativeQuery = true,value = "SELECT distinct gender FROM detail_account where  status = 1 ")
     List<String> findAllGender();
+
+    @Query(nativeQuery = true,value = "SELECT * FROM detail_account_comments join comment on detail_account_id = detail_account_id;")
+    List<Comment> finAllComt(long detail_account_id);
 }

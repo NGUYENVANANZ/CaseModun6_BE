@@ -72,7 +72,8 @@ public class AccountService implements UserDetailsService {
 
     public DetailAccount finbyVip(long vip,long id){
         return detailAccountRepo.findByVip(vip,id);
- }
+    }
+
     public List<Employ> finallempoy(){
         return employRepo.showEmployall();
     }
