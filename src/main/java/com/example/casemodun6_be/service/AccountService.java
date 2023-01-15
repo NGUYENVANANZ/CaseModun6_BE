@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class AccountService implements UserDetailsService {
+public class AccountService implements UserDetailsService,IAccountService {
     @Autowired
     IAccountRepo iAccountRepo;
 
@@ -75,5 +75,70 @@ public class AccountService implements UserDetailsService {
  }
     public List<Employ> finallempoy(){
         return employRepo.showEmployall();
+    }
+
+    @Override
+    public void save(Account account) {
+
+    }
+
+    @Override
+    public List<Account> findAll() {
+        return null;
+    }
+
+    @Override
+    public void editProfile(Account account) {
+
+    }
+
+    @Override
+    public List<Account> getAllAccount() {
+        return null;
+    }
+
+    @Override
+    public List<Account> getAllAccountNotConfirmOrderByTime() {
+        return null;
+    }
+
+    @Override
+    public List<Account> getAllAccountConfirmOrderByTime() {
+        return null;
+    }
+
+    @Override
+    public Account findAccountById(int id) {
+        return null;
+    }
+
+    @Override
+    public Account findByGmailAccount(String name) {
+        return null;
+    }
+
+    @Override
+    public void confirmRegisterAccount(String password, int status, int id) {
+
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public void setStatusAccountTo1(int id) {
+
+    }
+
+    @Override
+    public void setStatusAccountTo0(int id) {
+
+    }
+
+    @Override
+    public void changPassword(String email, String password) {
+
     }
 }
