@@ -91,11 +91,16 @@ public class SocketAPI {
         employService.saveEmploy(user.getId_NDDV(), user.getId_CCDV(), user.getMoney());
 
         DetailAccount detailAccount = detailAccountRepo.findById(user.getId_CCDV()).get();
-        long money = detailAccount.getMoney() + user.getMoney();
+        long x90 = user.getMoney()*90/100;
+        long x10 = user.getMoney()*10/100;
+        long money = detailAccount.getMoney() + x90;
         detailAccount.setMoney(money);
         detailAccountRepo.save(detailAccount);
 
-
+        DetailAccount detailAccount1 = detailAccountRepo.findById(Long.valueOf(1)).get();
+        long money1 = detailAccount1.getMoney() + x10;
+        detailAccount1.setMoney(money1);
+        detailAccountRepo.save(detailAccount1);
         simpMessagingTemplate.convertAndSend(url, notification);
     }
 
@@ -106,7 +111,7 @@ public class SocketAPI {
     }
 
     @GetMapping("/setSatus5/{id}")
-    public ResponseEntity<NotificationDTO> setSatus4(@PathVariable long id) {
+    public ResponseEntity<NotificationDTO> setSatus5(@PathVariable long id) {
         NotificationDTO notificationDTOS = notificationService.setStatus5(id);
 
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -123,5 +128,27 @@ public class SocketAPI {
     public ResponseEntity<NotificationDTO> setSatus6(@PathVariable long id) {
         NotificationDTO notificationDTOS = notificationService.setStatus6(id);
         return new ResponseEntity<>(notificationDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/setSatus8/{id}")
+    public ResponseEntity<NotificationDTO> setSatus9(@PathVariable long id) {
+        NotificationDTO notificationDTOS = notificationService.setStatus8(id);
+        return new ResponseEntity<>(notificationDTOS, HttpStatus.OK);
+    }
+
+    @MessageMapping("/newSatus7")
+    public void newSatus7(User user) throws Exception {
+        NotificationDTO notification = notificationService.newStatus7(user.getId_NDDV(), user.getId_CCDV(), user.getId_Notification(), user.getMoney());
+        Account account1 = accountService.finbyid(user.getId_CCDV());
+        String url = "/topic/" + account1.getUsername();
+        simpMessagingTemplate.convertAndSend(url, notification);
+    }
+
+    @MessageMapping("/setSatus7")
+    public void setSatus7(User user) throws Exception {
+        NotificationDTO notification = notificationService.setStatus7(user.getId_Notification());
+        Account account1 = accountService.finbyid(user.getId_CCDV());
+        String url = "/topic/" + account1.getUsername();
+        simpMessagingTemplate.convertAndSend(url, notification);
     }
 }
