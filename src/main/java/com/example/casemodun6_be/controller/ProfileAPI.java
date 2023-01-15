@@ -5,8 +5,10 @@ import com.example.casemodun6_be.model.DTO.EmployDTO;
 import com.example.casemodun6_be.model.DTO.ShowProfileDTO;
 import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.model.Employ;
+import com.example.casemodun6_be.model.Img;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.repository.IProfileRepo;
+import com.example.casemodun6_be.repository.ImageRepo;
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.EmployService;
 import com.example.casemodun6_be.service.ProfileService;
@@ -17,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +42,8 @@ public class ProfileAPI {
     @Autowired
     IProfileRepo iProfileRepo;
 
+    @Autowired
+    ImageRepo imageRepo;
 
     @GetMapping("/showEmploys")
     public ResponseEntity<List<EmployDTO>> showEmploy() {
@@ -53,11 +58,11 @@ public class ProfileAPI {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = accountService.findByName(userDetails.getUsername());
         ShowProfileDTO showProfileDTOS = profileService.showProfile(account.getId());
-        return new ResponseEntity<>(showProfileDTOS,HttpStatus.OK);
+        return new ResponseEntity<>(showProfileDTOS, HttpStatus.OK);
     }
 
     @PostMapping("/editProfile")
-    public ResponseEntity<ShowProfileDTO> editProfile(@RequestBody ShowProfileDTO showProfileDTO){
+    public ResponseEntity<ShowProfileDTO> editProfile(@RequestBody ShowProfileDTO showProfileDTO) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = accountService.findByName(userDetails.getUsername());
 
@@ -84,19 +89,19 @@ public class ProfileAPI {
         iProfileRepo.save(detailAccount1);
 
         ShowProfileDTO showProfileDTO1 = profileService.showProfile(account.getId());
-        return new ResponseEntity<>(showProfileDTO1,HttpStatus.OK);
+        return new ResponseEntity<>(showProfileDTO1, HttpStatus.OK);
     }
-@GetMapping("/showAll1")
-public ResponseEntity<List<EmployDTO>> ShowAlls(){
-    List<Employ> dtos =  accountService.finallempoy();
-    List<EmployDTO> dtoList = new ArrayList<>();
-    for (int i = 0; i < dtos.size(); i++) {
-        dtoList.add(new EmployDTO(dtos.get(i).getDetailAccount().getFullName(),dtos.get(i).getDetailAccount().getImg(),dtos.get(i).getDate(),dtos.get(i).getMoney()));
+
+    @GetMapping("/showAll1")
+    public ResponseEntity<List<EmployDTO>> ShowAlls() {
+        List<Employ> dtos = accountService.finallempoy();
+        List<EmployDTO> dtoList = new ArrayList<>();
+        for (int i = 0; i < dtos.size(); i++) {
+            dtoList.add(new EmployDTO(dtos.get(i).getDetailAccount().getFullName(), dtos.get(i).getDetailAccount().getImg(), dtos.get(i).getDate(), dtos.get(i).getMoney()));
+        }
+        return new ResponseEntity<>(dtoList, HttpStatus.OK);
+
     }
-    return new ResponseEntity<>(dtoList, HttpStatus.OK);
-
-}
-
 
 
     @GetMapping("/editStatus1")
@@ -145,6 +150,20 @@ public ResponseEntity<List<EmployDTO>> ShowAlls(){
         Account account = accountService.findByName(userDetails.getUsername());
         DetailAccount detailAccount = account.getDetailAccount();
         detailAccount.setImg(img);
+        detailAccountRepo.save(detailAccount);
+        return new ResponseEntity<>(detailAccount, HttpStatus.OK);
+    }
+
+    @PostMapping("/editImg")
+    public ResponseEntity<DetailAccount> editImg(@RequestBody Img img) {
+        imageRepo.save(img);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = accountService.findByName(userDetails.getUsername());
+        DetailAccount detailAccount = account.getDetailAccount();
+        if (detailAccount.getImgs().size() < 4){
+            List<Img> imgList = detailAccount.getImgs();
+            imgList.add(img);
+        }
         detailAccountRepo.save(detailAccount);
         return new ResponseEntity<>(detailAccount, HttpStatus.OK);
     }
