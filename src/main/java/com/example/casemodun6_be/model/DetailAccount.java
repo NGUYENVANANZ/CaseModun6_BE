@@ -1,13 +1,11 @@
 package com.example.casemodun6_be.model;
 
-import com.example.casemodun6_be.model.DTO.AccountDTO;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
