@@ -21,5 +21,4 @@ public interface AdminRepo extends JpaRepository<Account,Long> {
 
    @Query(nativeQuery = true, value = "SELECT * from dettailAccount where id = :id")
    DetailAccount findByIdhi(@Param("id") long id);
-
 }

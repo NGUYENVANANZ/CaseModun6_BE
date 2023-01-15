@@ -2,9 +2,7 @@ package com.example.casemodun6_be.controller;
 
 import com.example.casemodun6_be.model.Account;
 import com.example.casemodun6_be.model.DTO.AccountDTO;
-import com.example.casemodun6_be.model.DTO.EmployDTO;
 import com.example.casemodun6_be.model.DetailAccount;
-import com.example.casemodun6_be.model.Employ;
 import com.example.casemodun6_be.model.Roles;
 import com.example.casemodun6_be.repository.AdminRepo;
 import com.example.casemodun6_be.repository.IAccountRepo;
@@ -97,6 +95,61 @@ public class AdminAPI {
             dtos.add(accountDTO);
         }
         return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/lock1/{id}")
+    public ResponseEntity<List<AccountDTO>> lockroles3(@PathVariable long id) {
+        Account account = accountService.finbyid(id);
+        account.setStatus(0);
+        iAccountRepo.save(account);
+        List<Account> accounts = accountService.getAll();
+        List<Account> accounts1 = new ArrayList<>();
+        for (int i = 0; i < accounts.size(); i++) {
+            List<Roles> roles = accounts.get(i).getDetailAccount().getRoles();
+            for (int j = 0; j < roles.size(); j++) {
+                if(accounts.get(i).getDetailAccount().getRoles().get(j).getId()==3){
+                    accounts1.add(accounts.get(i));
+                }
+            }
+        }
+        List<AccountDTO> dtos = new ArrayList<>();
+        for (int i = 0; i < accounts1.size(); i++) {
+            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(), accounts1.get(i).getDetailAccount().getImg(), accounts1.get(i).getDetailAccount().getFullName(), accounts1.get(i).getDetailAccount().getMoTa(), accounts1.get(i).getStatus(), accounts1.get(i).getDetailAccount().getVip(), accounts1.get(i).getDetailAccount(), accounts1.get(i).getDetailAccount().getMoney());
+            dtos.add(accountDTO);
+        }
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/unlock1/{id}")
+    public ResponseEntity<List<AccountDTO>> unlockroles3(@PathVariable long id) {
+        Account account = accountService.finbyid(id);
+        account.setStatus(1);
+        iAccountRepo.save(account);
+        List<Account> accounts = accountService.getAll();
+        List<Account> accounts1 = new ArrayList<>();
+        for (int i = 0; i < accounts.size(); i++) {
+            List<Roles> roles = accounts.get(i).getDetailAccount().getRoles();
+            for (int j = 0; j < roles.size(); j++) {
+                if(accounts.get(i).getDetailAccount().getRoles().get(j).getId()==3){
+                    accounts1.add(accounts.get(i));
+                }
+            }
+        }
+        List<AccountDTO> dtos = new ArrayList<>();
+        for (int i = 0; i < accounts1.size(); i++) {
+            AccountDTO accountDTO = new AccountDTO(accounts1.get(i).getId(), accounts1.get(i).getDetailAccount().getImg(), accounts1.get(i).getDetailAccount().getFullName(), accounts1.get(i).getDetailAccount().getMoTa(), accounts1.get(i).getStatus(), accounts1.get(i).getDetailAccount().getVip(), accounts1.get(i).getDetailAccount(), accounts1.get(i).getDetailAccount().getMoney());
+            dtos.add(accountDTO);
+        }
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+    @PostMapping("/vip")
+    public ResponseEntity<DetailAccount> vip(@PathVariable long vip){
+        DetailAccount detailAccount1 = accountService.finbyid(vip).getDetailAccount();
+        detailAccount1.setVip(1);
+        return new ResponseEntity<>(detailAccount1, HttpStatus.OK);
     }
 
 

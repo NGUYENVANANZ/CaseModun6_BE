@@ -19,6 +19,6 @@ public interface IAccountRepo extends CrudRepository<Account, Long> {
     @Query(nativeQuery = true,value = "SELECT * from account where id = :id")
     Account findById(@Param("id") long id);
 
-    @Query(nativeQuery = true,value = "SELECT * from Comment where detail_account_id = :detail_account_id and comments_id = :comments_id")
+    @Query(nativeQuery = true,value = "SELECT * from Comment where detail_account_id = :detail_account_id and comments_id = :comments_id ")
     Comment finAllComt(@Param("detail_account_id")long detail_account_id);
 }

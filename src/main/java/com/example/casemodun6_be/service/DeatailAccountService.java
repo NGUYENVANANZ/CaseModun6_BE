@@ -84,20 +84,26 @@ public class DeatailAccountService {
     public List<Sart> showSart() {
         List<DetailAccountSart> detailAccounts = detailAccounts(detailAccountRepo.findDetailSart());
         List<Sart> sarts = new ArrayList<>();
-        List<Double> sart = sart((List<DetailAccount>) detailAccountRepo.findAll());
         for (int i = 0; i < detailAccounts.size(); i++) {
-            sarts.add(new Sart(detailAccounts.get(i), sart.get(i)));
+            sarts.add(new Sart(detailAccounts.get(i), sart(detailAccounts.get(i).getId())));
         }
         Collections.sort(sarts, new Comparator<Sart>() {
             @Override
             public int compare(Sart o1, Sart o2) {
-                return (int) (o2.getStar() - o1.getStar());
+                if(o2.getStar() - o1.getStar() > 0){
+                    return 1;
+                }else if (o2.getStar() - o1.getStar() == 0){
+                    return 0;
+                }else {
+                    return -1;
+                }
+
             }
         });
 
-        if (sarts.size() > 6) {
+        if (sarts.size() > 3) {
             List<Sart> sarts1 = new ArrayList<>();
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 3; i++) {
                 sarts1.add(sarts.get(i));
             }
             return sarts1;
@@ -130,24 +136,17 @@ public class DeatailAccountService {
     }
 
 
-    public List<Double> sart(List<DetailAccount> detailAccounts) {
-        List<Double> doubles = new ArrayList<>();
-
-        for (DetailAccount d : detailAccounts) {
+    public Double sart(long id) {
+        DetailAccount detailAccount = detailAccountRepo.findById(id).get();
+        double ketQua = 0;
             double x = 0;
-
-            if (d.getComments().size() != 0) {
-                for (int i = 0; i < d.getComments().size(); i++) {
-                    x += d.getComments().get(i).getStar();
+            if (detailAccount.getComments().size() != 0) {
+                for (int i = 0; i < detailAccount.getComments().size(); i++) {
+                    x += detailAccount.getComments().get(i).getStar();
                 }
-                doubles.add(x / d.getComments().size());
-            } else {
-                doubles.add(0.0);
+                ketQua =x / detailAccount.getComments().size();
             }
-
-        }
-
-        return doubles;
+        return ketQua;
     }
 
 

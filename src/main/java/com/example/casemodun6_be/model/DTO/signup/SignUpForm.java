@@ -1,9 +1,5 @@
 package com.example.casemodun6_be.model.DTO.signup;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -14,7 +10,7 @@ public class SignUpForm {
     private String password;
     private String confirmPassword;
     private String phoneNumber;
-    private Date birthday;
+    private LocalDate birthday;
     private String gender;
 
     public String getUsername() {
@@ -57,11 +53,11 @@ public class SignUpForm {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 

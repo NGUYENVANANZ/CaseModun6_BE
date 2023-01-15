@@ -160,8 +160,7 @@ public class AccountAPI {
         if(checkMail && checkUserName) {
             detailAccount1.setGender(signUpForm.getGender());
             detailAccount1.setBirthday(signUpForm.getBirthday());
-            detailAccount1.setJoinDate(LocalDate.from(LocalDateTime.now()));
-
+            detailAccount1.setJoinDate(LocalDateTime.now());
             List<Roles> roles = new ArrayList<>();
             roles.add(rolesRepo.findById(2L).get());
             detailAccount1.setRoles(roles);

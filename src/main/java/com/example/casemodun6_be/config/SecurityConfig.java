@@ -38,7 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**");
-        http.authorizeRequests().antMatchers( "/login", "/register","/showallgender","/**").permitAll();
+        http.authorizeRequests().antMatchers( "/login", "/register","/showallgender").permitAll();
+        http.authorizeRequests().antMatchers( "/login", "/register", "/hello","/gkz-stomp-endpoint/**").permitAll();
         http.authorizeRequests().antMatchers( "/login", "/registers/**").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable();
