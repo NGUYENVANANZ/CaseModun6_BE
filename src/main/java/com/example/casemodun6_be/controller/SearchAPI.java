@@ -12,8 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -40,11 +40,11 @@ public class SearchAPI {
     @GetMapping("/searchFilter")
     public ResponseEntity <List<DetailAccount>> searchByAll(
             @RequestParam(name = "gender") String gender,
-//            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate birthday,
+            @RequestParam(name = "birthday") Date birthday,
             @RequestParam(name = "city") String city
 
     ) {
         return new ResponseEntity<>(
-                accountServiceSearch.searchByAll(gender, city), HttpStatus.OK);
+                accountServiceSearch.searchByAll(gender,birthday, city), HttpStatus.OK);
     }
 }

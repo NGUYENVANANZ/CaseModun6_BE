@@ -8,6 +8,7 @@ import com.example.casemodun6_be.repository.ISearchRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.List;
@@ -29,9 +30,9 @@ public class AccountServiceSearch implements IAccountServiceSearch {
     @Override
     public List<DetailAccount> searchByAll(
             String gender,
-//            LocalDate birthday,
+            Date birthday,
             String city) {
-        return iSearchRepo.searchByAll(gender, city);
+        return iSearchRepo.searchByAll(gender, birthday, city);
     }
 
 
