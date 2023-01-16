@@ -27,13 +27,11 @@ public class AccountServiceSearch implements IAccountServiceSearch {
     }
 
     @Override
-    public Iterable<DetailAccount> searchByAll(
-            long status,
+    public List<DetailAccount> searchByAll(
             String gender,
-            LocalDate birthday,
-            String city,
-            long hires) {
-        return iSearchRepo.searchByAll(status,gender, Year.from(birthday), city, hires);
+//            LocalDate birthday,
+            String city) {
+        return iSearchRepo.searchByAll(gender, city);
     }
 
 

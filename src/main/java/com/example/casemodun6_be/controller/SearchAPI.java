@@ -2,6 +2,7 @@ package com.example.casemodun6_be.controller;
 
 import com.example.casemodun6_be.model.DTO.DetailAccountSart;
 import com.example.casemodun6_be.model.DetailAccount;
+import com.example.casemodun6_be.repository.ISearchRepo;
 import com.example.casemodun6_be.service.DeatailAccountService;
 import com.example.casemodun6_be.service.search.AccountServiceSearch;
 import com.example.casemodun6_be.service.search.IAccountServiceSearch;
@@ -12,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.Year;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -28,19 +29,22 @@ public class SearchAPI {
     @Autowired
     AccountServiceSearch accountServiceSearch;
 
+    @Autowired
+    ISearchRepo iSearchRepo;
+
     @GetMapping("/{name}")
     public ResponseEntity<List<DetailAccountSart>> findByName(@PathVariable String name) {
         return new ResponseEntity<>(deatailAccountService.search(name), HttpStatus.OK);
     }
 
     @GetMapping("/searchFilter")
-    public ResponseEntity<Iterable<DetailAccount>> searchByAll(@RequestParam(name = "status") long status,
-                                                               @RequestParam(name = "gender") String gender,
-                                                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Year birthday,
-                                                               @RequestParam(name = "city") String city,
-                                                               @RequestParam(name = "hires") long hires
+    public ResponseEntity <List<DetailAccount>> searchByAll(
+            @RequestParam(name = "gender") String gender,
+//            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate birthday,
+            @RequestParam(name = "city") String city
+
     ) {
         return new ResponseEntity<>(
-                accountServiceSearch.searchByAll(status,gender, LocalDate.from(birthday), city, hires), HttpStatus.OK);
+                accountServiceSearch.searchByAll(gender, city), HttpStatus.OK);
     }
 }

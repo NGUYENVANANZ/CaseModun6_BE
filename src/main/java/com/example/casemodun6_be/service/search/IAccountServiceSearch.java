@@ -9,6 +9,6 @@ import java.util.List;
 public interface IAccountServiceSearch extends ICRUD_Service<DetailAccount> {
     List<DetailAccount> findByName(String name);
 
-    Iterable<DetailAccount> searchByAll(long status, String gender, LocalDate birthday, String city, long hires);
+    List<DetailAccount> searchByAll( String gender, String city);
 
 }
