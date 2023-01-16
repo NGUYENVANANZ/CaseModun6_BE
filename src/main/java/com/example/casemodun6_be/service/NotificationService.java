@@ -41,7 +41,7 @@ public class NotificationService {
         notification.setDate(LocalDate.now());
         notification.setStatus(1);
         notificationRepo.save(notification);
-        NotificationDTO notificationDTO = new NotificationDTO(notification.getId(), notification.getAccountSend().getId(), notification.getAccount().getDetailAccount().getFullName(), notification.getAccountSend().getDetailAccount().getImg(), notification.getDate(), notification.getMoney(), notification.getStatus(), notification.getId_answer());
+        NotificationDTO notificationDTO = new NotificationDTO(notification.getId(), notification.getAccountSend().getId(), notification.getAccountSend().getDetailAccount().getFullName(), notification.getAccountSend().getDetailAccount().getImg(), notification.getDate(), notification.getMoney(), notification.getStatus(), notification.getId_answer());
         return notificationDTO;
     }
 
@@ -124,5 +124,61 @@ public class NotificationService {
         return notificationDTO;
     }
 
+    public NotificationDTO newStatus10(long id_NDDV, long id_CCDV) {
+        Account account = accountService.finbyid(id_NDDV);
+        Account account1 = accountService.finbyid(id_CCDV);
+        Notification notification = new Notification();
+        notification.setAccount(account1);
+        notification.setAccountSend(account);
+        notification.setMoney(0);
+        notification.setDate(LocalDate.now());
+        notification.setStatus(10);
+        notificationRepo.save(notification);
+        NotificationDTO notificationDTO = new NotificationDTO(notification.getId(), notification.getAccountSend().getId(), notification.getAccountSend().getDetailAccount().getFullName(), notification.getAccountSend().getDetailAccount().getImg(), notification.getDate(), notification.getMoney(), notification.getStatus(), notification.getId_answer());
+        return notificationDTO;
+    }
 
+    public NotificationDTO setStatus13(long id) {
+        Notification notification = notificationRepo.findById(id).get();
+        notification.setStatus(13);
+        notificationRepo.save(notification);
+        NotificationDTO notificationDTO = new NotificationDTO(notification.getId(), notification.getAccountSend().getId(), notification.getAccount().getDetailAccount().getFullName(), notification.getAccountSend().getDetailAccount().getImg(), notification.getDate(), notification.getMoney(), notification.getStatus(), notification.getId_answer());
+        return notificationDTO;
+    }
+
+    public NotificationDTO setStatus14(long id) {
+        Notification notification = notificationRepo.findById(id).get();
+        notification.setStatus(14);
+        notificationRepo.save(notification);
+        NotificationDTO notificationDTO = new NotificationDTO(notification.getId(), notification.getAccountSend().getId(), notification.getAccount().getDetailAccount().getFullName(), notification.getAccountSend().getDetailAccount().getImg(), notification.getDate(), notification.getMoney(), notification.getStatus(), notification.getId_answer());
+        return notificationDTO;
+    }
+
+    public NotificationDTO newStatus11(long id_NDDV, long id_CCDV) {
+        Account account = accountService.finbyid(id_NDDV);
+        Account account1 = accountService.finbyid(id_CCDV);
+        Notification notification = new Notification();
+        notification.setAccount(account1);
+        notification.setAccountSend(account);
+        notification.setMoney(0);
+        notification.setDate(LocalDate.now());
+        notification.setStatus(11);
+        notificationRepo.save(notification);
+        NotificationDTO notificationDTO = new NotificationDTO(notification.getId(), notification.getAccountSend().getId(), notification.getAccount().getDetailAccount().getFullName(), notification.getAccountSend().getDetailAccount().getImg(), notification.getDate(), notification.getMoney(), notification.getStatus(), notification.getId_answer());
+        return notificationDTO;
+    }
+
+    public NotificationDTO newStatus12(long id_NDDV, long id_CCDV) {
+        Account account = accountService.finbyid(id_NDDV);
+        Account account1 = accountService.finbyid(id_CCDV);
+        Notification notification = new Notification();
+        notification.setAccount(account1);
+        notification.setAccountSend(account);
+        notification.setMoney(0);
+        notification.setDate(LocalDate.now());
+        notification.setStatus(12);
+        notificationRepo.save(notification);
+        NotificationDTO notificationDTO = new NotificationDTO(notification.getId(), notification.getAccountSend().getId(), notification.getAccount().getDetailAccount().getFullName(), notification.getAccountSend().getDetailAccount().getImg(), notification.getDate(), notification.getMoney(), notification.getStatus(), notification.getId_answer());
+        return notificationDTO;
+    }
 }
