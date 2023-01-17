@@ -1,11 +1,9 @@
 package com.example.casemodun6_be.controller;
 
 
-import com.example.casemodun6_be.model.Account;
+import com.example.casemodun6_be.model.*;
 import com.example.casemodun6_be.model.DTO.NotificationDTO;
-import com.example.casemodun6_be.model.DetailAccount;
-import com.example.casemodun6_be.model.Roles;
-import com.example.casemodun6_be.model.User;
+import com.example.casemodun6_be.repository.CommentRepo;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.repository.IAccountRepo;
 import com.example.casemodun6_be.service.AccountService;
@@ -45,6 +43,9 @@ public class SocketAPI {
 
     @Autowired
     DetailAccountRepo detailAccountRepo;
+
+    @Autowired
+    CommentRepo commentRepo;
 
 
     @GetMapping("/notificationDTO")
@@ -188,5 +189,24 @@ public class SocketAPI {
         Account account1 = accountService.finbyid(user.getId_CCDV());
         String url = "/topic/" + account1.getUsername();
         simpMessagingTemplate.convertAndSend(url, notification);
+    }
+
+    @GetMapping("/comment/{id}&&{star}&&{comment}")
+    public ResponseEntity<Comment> comment(@PathVariable long id, @PathVariable long star, @PathVariable String comment) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = accountService.findByName(userDetails.getUsername());
+
+
+        Comment comment1 = new Comment();
+        comment1.setName(account.getDetailAccount().getFullName());
+        comment1.setStar(star);
+        comment1.setText(comment);
+        commentRepo.save(comment1);
+
+        Account account1 = accountService.finbyid(id);
+        account1.getDetailAccount().getComments().add(comment1);
+        iAccountRepo.save(account1);
+
+        return new ResponseEntity<>(comment1, HttpStatus.OK);
     }
 }

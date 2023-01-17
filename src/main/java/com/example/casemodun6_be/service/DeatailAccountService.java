@@ -9,6 +9,8 @@ import com.example.casemodun6_be.repository.EmployRepo;
 import com.example.casemodun6_be.repository.ISearchRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -147,7 +149,12 @@ public class DeatailAccountService {
             }
             ketQua = x / detailAccount.getComments().size();
         }
-        return ketQua;
+        int scale = 1;
+        BigDecimal tempBig = new BigDecimal(Double.toString(ketQua));
+        tempBig = tempBig.setScale(scale, BigDecimal.ROUND_HALF_EVEN);
+        String strValue = tempBig.stripTrailingZeros().toPlainString();
+        System.out.println(strValue);
+        return Double.valueOf(strValue);
     }
 
 
