@@ -40,7 +40,7 @@ public class SearchAPI {
     @GetMapping("/searchFilter")
     public ResponseEntity <List<DetailAccount>> searchByAll(
             @RequestParam(name = "gender") String gender,
-            @RequestParam(name = "birthday") Date birthday,
+            @RequestParam(name = "birthday") long birthday,
             @RequestParam(name = "city") String city
 
     ) {

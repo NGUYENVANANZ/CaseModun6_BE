@@ -10,6 +10,6 @@ import java.util.List;
 public interface IAccountServiceSearch extends ICRUD_Service<DetailAccount> {
     List<DetailAccount> findByName(String name);
 
-    List<DetailAccount> searchByAll(String gender, Date birthday, String city);
+    List<DetailAccount> searchByAll(String gender, long birthday, String city);
 
 }

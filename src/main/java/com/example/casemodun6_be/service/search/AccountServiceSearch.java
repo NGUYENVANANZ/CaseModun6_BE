@@ -30,7 +30,7 @@ public class AccountServiceSearch implements IAccountServiceSearch {
     @Override
     public List<DetailAccount> searchByAll(
             String gender,
-            Date birthday,
+            long birthday,
             String city) {
         return iSearchRepo.searchByAll(gender, birthday, city);
     }

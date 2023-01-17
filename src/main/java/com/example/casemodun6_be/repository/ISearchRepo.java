@@ -17,11 +17,13 @@ public interface ISearchRepo extends PagingAndSortingRepository<DetailAccount, L
     @Query(nativeQuery = true, value = "SELECT * FROM detail_account WHERE full_name LIKE concat('%',:full_name,'%') and status = 1")
     List<DetailAccount> findByName(@Param("full_name") String full_name);
 
-//    @Query(nativeQuery = true, value = "SELECT * FROM detail_account where gender = :gender and 18 <= and city = :city")
-    @Query(nativeQuery = true, value = "SELECT * from detail_account where gender=:gender and birthday=:birthday and city=:city")
+    //    @Query(nativeQuery = true, value = "SELECT * FROM detail_account where gender = :gender and 18 <= and city = :city")
+    @Query(value = "select * from detail_account where detail_account.gender = :gender and (year(CURDATE()) - year(detail_account.birthday)) = :birthday and city =:city", nativeQuery = true)
     List<DetailAccount> searchByAll(
+
             @Param("gender") String gender,
-            @Param("birthday") Date birthday,
+            @Param("birthday") long birthday,
             @Param("city") String city);
+
 
 }
