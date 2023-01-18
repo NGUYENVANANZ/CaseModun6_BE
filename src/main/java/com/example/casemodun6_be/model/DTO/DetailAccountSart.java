@@ -2,6 +2,7 @@ package com.example.casemodun6_be.model.DTO;
 
 import com.example.casemodun6_be.model.Provided;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class DetailAccountSart {
@@ -21,6 +22,9 @@ public class DetailAccountSart {
     private String Mota;
     private List<Provided> provideds;
     private double price;
+    private String gender;
+    private LocalDate birthday;
+    private String city;
 
     public String getFullName() {
         return fullName;
@@ -62,15 +66,42 @@ public class DetailAccountSart {
         this.price = price;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public DetailAccountSart() {
     }
 
-    public DetailAccountSart(long id, String fullName, String img, String mota, List<Provided> provideds, double price) {
+    public DetailAccountSart(long id, String fullName, String img, String mota, List<Provided> provideds, double price,String gender, LocalDate birthday ,String city) {
         this.id = id;
         this.fullName = fullName;
         this.img = img;
         Mota = mota;
         this.provideds = provideds;
         this.price = price;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.city = city;
     }
 }
