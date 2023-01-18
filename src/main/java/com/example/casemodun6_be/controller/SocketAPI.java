@@ -1,10 +1,9 @@
 package com.example.casemodun6_be.controller;
 
 
-import com.example.casemodun6_be.model.Account;
+import com.example.casemodun6_be.model.*;
 import com.example.casemodun6_be.model.DTO.NotificationDTO;
-import com.example.casemodun6_be.model.DetailAccount;
-import com.example.casemodun6_be.model.User;
+import com.example.casemodun6_be.repository.CommentRepo;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.repository.IAccountRepo;
 import com.example.casemodun6_be.service.AccountService;
@@ -45,11 +44,9 @@ public class SocketAPI {
     @Autowired
     DetailAccountRepo detailAccountRepo;
 
-//    @MessageMapping("/hello")
-//    public void greeting(User user) throws Exception {
-//        String url = "/topic/" + user.getName();
-//        simpMessagingTemplate.convertAndSend(url, new Hello(user.getMessage()));
-//    }
+    @Autowired
+    CommentRepo commentRepo;
+
 
     @GetMapping("/notificationDTO")
     public ResponseEntity<List<NotificationDTO>> showNotification() {
@@ -91,8 +88,8 @@ public class SocketAPI {
         employService.saveEmploy(user.getId_NDDV(), user.getId_CCDV(), user.getMoney());
 
         DetailAccount detailAccount = detailAccountRepo.findById(user.getId_CCDV()).get();
-        long x90 = user.getMoney()*90/100;
-        long x10 = user.getMoney()*10/100;
+        long x90 = user.getMoney() * 90 / 100;
+        long x10 = user.getMoney() * 10 / 100;
         long money = detailAccount.getMoney() + x90;
         detailAccount.setMoney(money);
         detailAccountRepo.save(detailAccount);
@@ -150,5 +147,66 @@ public class SocketAPI {
         Account account1 = accountService.finbyid(user.getId_CCDV());
         String url = "/topic/" + account1.getUsername();
         simpMessagingTemplate.convertAndSend(url, notification);
+    }
+
+    @MessageMapping("/sendAdmin")
+    public void sendAdmin(User user) throws Exception {
+        NotificationDTO notification = notificationService.newStatus10(user.getId_NDDV(), user.getId_CCDV());
+        String url = "/topic/an";
+        simpMessagingTemplate.convertAndSend(url, notification);
+    }
+
+    @GetMapping("/setSatus13/{id}")
+    public ResponseEntity<NotificationDTO> setSatus13(@PathVariable long id) {
+        Roles roles = new Roles(3, "ROLE_SERVICE");
+        NotificationDTO notificationDTOS = notificationService.setStatus13(id);
+        Account account = accountService.finbyid(notificationDTOS.getId_account());
+        account.getDetailAccount().getRoles().add(roles);
+        iAccountRepo.save(account);
+        return new ResponseEntity<>(notificationDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping("/setSatus14/{id}")
+    public ResponseEntity<NotificationDTO> setSatus14(@PathVariable long id) {
+        NotificationDTO notificationDTOS = notificationService.setStatus14(id);
+        Account account = accountService.finbyid(notificationDTOS.getId_account());
+        account.getDetailAccount().setStatus(0);
+        iAccountRepo.save(account);
+        return new ResponseEntity<>(notificationDTOS, HttpStatus.OK);
+    }
+
+    @MessageMapping("/answerUser")
+    public void answerUser(User user) throws Exception {
+        NotificationDTO notification = notificationService.newStatus11(user.getId_NDDV(), user.getId_CCDV());
+        Account account1 = accountService.finbyid(user.getId_CCDV());
+        String url = "/topic/" + account1.getUsername();
+        simpMessagingTemplate.convertAndSend(url, notification);
+    }
+
+    @MessageMapping("/answerUser1")
+    public void answerUser1(User user) throws Exception {
+        NotificationDTO notification = notificationService.newStatus12(user.getId_NDDV(), user.getId_CCDV());
+        Account account1 = accountService.finbyid(user.getId_CCDV());
+        String url = "/topic/" + account1.getUsername();
+        simpMessagingTemplate.convertAndSend(url, notification);
+    }
+
+    @GetMapping("/comment/{id}&&{star}&&{comment}")
+    public ResponseEntity<Comment> comment(@PathVariable long id, @PathVariable long star, @PathVariable String comment) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = accountService.findByName(userDetails.getUsername());
+
+
+        Comment comment1 = new Comment();
+        comment1.setName(account.getDetailAccount().getFullName());
+        comment1.setStar(star);
+        comment1.setText(comment);
+        commentRepo.save(comment1);
+
+        Account account1 = accountService.finbyid(id);
+        account1.getDetailAccount().getComments().add(comment1);
+        iAccountRepo.save(account1);
+
+        return new ResponseEntity<>(comment1, HttpStatus.OK);
     }
 }
