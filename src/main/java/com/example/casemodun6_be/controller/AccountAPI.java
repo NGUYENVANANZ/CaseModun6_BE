@@ -103,9 +103,9 @@ public class AccountAPI {
                 check = false;
             }
         }
-        if (check){
+        if (check) {
             return new ResponseEntity<>(true, HttpStatus.OK);
-        }else {
+        } else {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
     }
@@ -145,7 +145,6 @@ public class AccountAPI {
     }
 
     @PostMapping("/register")
-<<<<<<< HEAD
     public ResponseEntity<List<Boolean>> register(@RequestBody SignUpForm signUpForm) {
         List<Boolean> result = new ArrayList<>();
         Account account = new Account();
@@ -156,7 +155,7 @@ public class AccountAPI {
         boolean checkUserName = appUserByName == null;
         boolean checkMail = appUserByEmail == null;
 
-        if(checkMail && checkUserName) {
+        if (checkMail && checkUserName) {
             detailAccount1.setGender(signUpForm.getGender());
             detailAccount1.setBirthday(signUpForm.getBirthday());
             detailAccount1.setJoinDate(LocalDate.now());
@@ -173,34 +172,14 @@ public class AccountAPI {
             account.setDetailAccount(detailAccount1);
             account.setStatus(1);
             iAccountRepo.save(account);
+            SendMailAPI sendMailAPI = new SendMailAPI();
+            sendMailAPI.sendMail(account.getEmail(), "Chào mừng bạn đến với web thuê nguời yêu", "Tài khoản của bạn là :" + account.getUsername() + "Mật khẩu của bạn là :" + account.getPassword());
             return new ResponseEntity<>(result, HttpStatus.OK);
-        }else {
+        } else {
             result.add(checkUserName);
             result.add(checkMail);
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
-=======
-    public ResponseEntity<Account> register(@RequestBody SignUpForm signUpForm) {
-        DetailAccount detailAccount1 = new DetailAccount();
-        detailAccount1.setGender(signUpForm.getGender());
-        detailAccount1.setBirthday(signUpForm.getBirthDay());
-
-        List<Roles> roles = new ArrayList<>();
-        roles.add(rolesRepo.findById(2L).get());
-        detailAccount1.setRoles(roles);
-
-        detailAccountRepo.save(detailAccount1);
-
-        Account account = new Account();
-        account.setUsername(signUpForm.getUserName());
-        account.setEmail(signUpForm.getEmail());
-        account.setPassword(signUpForm.getPassword());
-        account.setPhoneNumber(signUpForm.getPhoneNumber());
-        account.setDetailAccount(detailAccount1);
-        account.setStatus(1);
-        iAccountRepo.save(account);
->>>>>>> f9acd2bda97b5484ff02705466769a21a3061c17
-
     }
 
     @GetMapping("/showAll")
@@ -215,16 +194,18 @@ public class AccountAPI {
         Account account = accountService.findByName(userDetails.getUsername());
         return new ResponseEntity<>(account.getDetailAccount(), HttpStatus.OK);
     }
+
     @GetMapping("/showDetailAccountbygender/{gender}")
     public ResponseEntity<?> gender(@PathVariable String gender) {
         return new ResponseEntity<>(detailAccountRepo.findAllDetailGender(gender), HttpStatus.OK);
     }
+
     @GetMapping("/showallgender")
     public ResponseEntity<?> allgender() {
         List<String> genders = detailAccountRepo.findAllGender();
         List<GenderDTO> genderDTOS = new ArrayList<>();
         for (int i = 0; i < genders.size(); i++) {
-            GenderDTO genderDTO  = new GenderDTO(i+1,genders.get(i));
+            GenderDTO genderDTO = new GenderDTO(i + 1, genders.get(i));
             genderDTOS.add(genderDTO);
         }
         return new ResponseEntity<>(genderDTOS, HttpStatus.OK);
