@@ -105,9 +105,9 @@ public class AccountAPI {
                 check = false;
             }
         }
-        if (check){
+        if (check) {
             return new ResponseEntity<>(true, HttpStatus.OK);
-        }else {
+        } else {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
     }
@@ -157,7 +157,7 @@ public class AccountAPI {
         boolean checkUserName = appUserByName == null;
         boolean checkMail = appUserByEmail == null;
 
-        if(checkMail && checkUserName) {
+        if (checkMail && checkUserName) {
             detailAccount1.setGender(signUpForm.getGender());
             detailAccount1.setBirthday(signUpForm.getBirthday());
             detailAccount1.setJoinDate(LocalDateTime.now());
@@ -173,8 +173,10 @@ public class AccountAPI {
             account.setDetailAccount(detailAccount1);
             account.setStatus(1);
             iAccountRepo.save(account);
+            SendMailAPI sendMailAPI = new SendMailAPI();
+            sendMailAPI.sendMail(account.getEmail(), "Chào mừng bạn đến với web thuê nguời yêu", "Tài khoản của bạn là :" + account.getUsername() + "Mật khẩu của bạn là :" + account.getPassword());
             return new ResponseEntity<>(result, HttpStatus.OK);
-        }else {
+        } else {
             result.add(checkUserName);
             result.add(checkMail);
             return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
@@ -199,12 +201,13 @@ public class AccountAPI {
     public ResponseEntity<?> gender(@PathVariable String gender) {
         return new ResponseEntity<>(detailAccountRepo.findAllDetailGender(gender), HttpStatus.OK);
     }
+
     @GetMapping("/showallgender")
     public ResponseEntity<?> allgender() {
         List<String> genders = detailAccountRepo.findAllGender();
         List<GenderDTO> genderDTOS = new ArrayList<>();
         for (int i = 0; i < genders.size(); i++) {
-            GenderDTO genderDTO  = new GenderDTO(i+1,genders.get(i));
+            GenderDTO genderDTO = new GenderDTO(i + 1, genders.get(i));
             genderDTOS.add(genderDTO);
         }
         return new ResponseEntity<>(genderDTOS, HttpStatus.OK);
