@@ -1,7 +1,6 @@
 package com.example.casemodun6_be.model.DTO;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class EmployDTO {
     private  String userName;

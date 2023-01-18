@@ -1,5 +1,6 @@
 package com.example.casemodun6_be.model.DTO;
 
+import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.model.Roles;
 
 import java.util.List;
@@ -10,13 +11,27 @@ public class AccountDTO {
     private String fullName;
     private String Mota;
     private long status;
+    private long vip;
+    private long money;
+    private DetailAccount detailAccount;
 
-    public AccountDTO(long id,String img, String fullName, String mota, long status) {
+    public DetailAccount getDetailAccount() {
+        return detailAccount;
+    }
+
+    public void setDetailAccount(DetailAccount detailaccount) {
+        this.detailAccount = detailaccount;
+    }
+
+    public AccountDTO(long id, String img, String fullName, String mota, long status, long vip, DetailAccount detailAccount,long money ) {
         this.id = id;
         this.img = img;
         this.fullName = fullName;
         Mota = mota;
         this.status = status;
+        this.vip = vip;
+        this.detailAccount = detailAccount;
+        this.money = money;
     }
 
     public long getId() {
@@ -59,6 +74,19 @@ public class AccountDTO {
         this.status = status;
     }
 
+    public long getVip() {
+        return vip;
+    }
 
+    public void setVip(long vip) {
+        this.vip = vip;
+    }
 
+    public long getMoney() {
+        return money;
+    }
+
+    public void setMoney(long money) {
+        this.money = money;
+    }
 }

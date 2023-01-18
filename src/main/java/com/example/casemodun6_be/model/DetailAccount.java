@@ -4,9 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -28,10 +28,9 @@ public class DetailAccount {
     private String yeuCau;
 
     private String fullName;
-    private Date birthday;
-    private LocalDate joinDate;
+    private LocalDate birthday;
+    private LocalDateTime joinDate;
     private long money;
-
     private String img;
 
     @OneToMany
@@ -44,11 +43,8 @@ public class DetailAccount {
     private List<Comment> comments;
 
     private long pricePerDay;
-
     private String faceLink;
-
     private long status;
-
     private long vip;
 
     @ManyToMany(fetch = FetchType.EAGER)

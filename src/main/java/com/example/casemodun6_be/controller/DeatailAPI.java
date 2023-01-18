@@ -1,19 +1,18 @@
 package com.example.casemodun6_be.controller;
 
-import com.example.casemodun6_be.model.DTO.DetailAccountSart;
+import com.example.casemodun6_be.model.Comment;
 import com.example.casemodun6_be.model.DTO.Hires;
 import com.example.casemodun6_be.model.DetailAccount;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
+import com.example.casemodun6_be.service.DeatailAccountService;
 import com.example.casemodun6_be.service.EmployService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -23,6 +22,9 @@ public class DeatailAPI {
 
     @Autowired
     EmployService employService;
+
+    @Autowired
+    DeatailAccountService deatailAccountService;
 
     @GetMapping("/detail/{id}")
     public ResponseEntity<DetailAccount> detailFindByID(@PathVariable long id) {
@@ -35,4 +37,5 @@ public class DeatailAPI {
         Hires hires = employService.returnEmploy(id);
         return new ResponseEntity<>(hires, HttpStatus.OK);
     }
+
 }

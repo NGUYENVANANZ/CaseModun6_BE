@@ -1,21 +1,17 @@
 package com.example.casemodun6_be.service;
 
-
+import com.example.casemodun6_be.model.*;
 import com.example.casemodun6_be.model.DTO.DetailAccountSart;
 import com.example.casemodun6_be.model.DTO.Hires;
 import com.example.casemodun6_be.model.DTO.Sart;
-import com.example.casemodun6_be.model.DetailAccount;
-import com.example.casemodun6_be.model.Employ;
-import com.example.casemodun6_be.model.Provided;
-import com.example.casemodun6_be.model.Roles;
 import com.example.casemodun6_be.repository.DetailAccountRepo;
 import com.example.casemodun6_be.repository.EmployRepo;
 import com.example.casemodun6_be.repository.ISearchRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class DeatailAccountService {
@@ -29,6 +25,7 @@ public class DeatailAccountService {
 
     @Autowired
     ISearchRepo iSearchRepo;
+
     public List<DetailAccountSart> getAll() {
         return detailAccounts(detailAccountRepo.getAll());
     }
@@ -83,20 +80,26 @@ public class DeatailAccountService {
     public List<Sart> showSart() {
         List<DetailAccountSart> detailAccounts = detailAccounts(detailAccountRepo.findDetailSart());
         List<Sart> sarts = new ArrayList<>();
-        List<Double> sart = sart((List<DetailAccount>) detailAccountRepo.findAll());
         for (int i = 0; i < detailAccounts.size(); i++) {
-            sarts.add(new Sart(detailAccounts.get(i), sart.get(i)));
+            sarts.add(new Sart(detailAccounts.get(i), sart(detailAccounts.get(i).getId())));
         }
         Collections.sort(sarts, new Comparator<Sart>() {
             @Override
             public int compare(Sart o1, Sart o2) {
-                return (int) (o2.getStar() - o1.getStar());
+                if (o2.getStar() - o1.getStar() > 0) {
+                    return 1;
+                } else if (o2.getStar() - o1.getStar() == 0) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+
             }
         });
 
-        if (sarts.size() > 6) {
+        if (sarts.size() > 3) {
             List<Sart> sarts1 = new ArrayList<>();
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 3; i++) {
                 sarts1.add(sarts.get(i));
             }
             return sarts1;
@@ -117,36 +120,41 @@ public class DeatailAccountService {
         for (int i = 0; i < employs.size(); i++) {
             hires.add(new Hires(detailAccountSarts.get(i), employs.get(i).getHires()));
         }
-
         Collections.sort(hires, new Comparator<Hires>() {
             @Override
             public int compare(Hires o1, Hires o2) {
                 return (int) (o2.getHires() - o1.getHires());
             }
         });
-
         return hires;
     }
 
+//    public DetailAccount ShowComment(long detail_account_id) {
+//        List<Comment> comments = detailAccountRepo.finAllComt(detail_account_id);
+//        List<DetailAccount> detailAccounts = new ArrayList<>();
+//        for (int i = 0; i < comments.size(); i++) {
+//              detailAccounts.add(detailAccounts.get(i).getId(),detailAccounts.get(i).getFullName(),comments.get(i).getText(),comments.get(i).getStar())
+//        }
+//        return
+//    }
 
-    public List<Double> sart(List<DetailAccount> detailAccounts) {
-        List<Double> doubles = new ArrayList<>();
 
-        for (DetailAccount d : detailAccounts) {
-            double x = 0;
-
-            if (d.getComments().size() != 0) {
-                for (int i = 0; i < d.getComments().size(); i++) {
-                    x += d.getComments().get(i).getStar();
-                }
-                doubles.add(x / d.getComments().size());
-            } else {
-                doubles.add(0.0);
+    public Double sart(long id) {
+        DetailAccount detailAccount = detailAccountRepo.findById(id).get();
+        double ketQua = 0;
+        double x = 0;
+        if (detailAccount.getComments().size() != 0) {
+            for (int i = 0; i < detailAccount.getComments().size(); i++) {
+                x += detailAccount.getComments().get(i).getStar();
             }
-
+            ketQua = x / detailAccount.getComments().size();
         }
-
-        return doubles;
+        int scale = 1;
+        BigDecimal tempBig = new BigDecimal(Double.toString(ketQua));
+        tempBig = tempBig.setScale(scale, BigDecimal.ROUND_HALF_EVEN);
+        String strValue = tempBig.stripTrailingZeros().toPlainString();
+        System.out.println(strValue);
+        return Double.valueOf(strValue);
     }
 
 
@@ -178,15 +186,11 @@ public class DeatailAccountService {
         }
         for (int i = 0; i < provideds.size(); i++) {
             provideds1.add(provideds.get(i));
-            if (provideds1.size() == 3){
+            if (provideds1.size() == 3) {
                 break;
             }
         }
         return provideds1;
+
+        }
     }
-
-
-
-
-
-}

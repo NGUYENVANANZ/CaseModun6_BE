@@ -16,7 +16,7 @@ import com.example.casemodun6_be.repository.RolesRepo;
 import com.example.casemodun6_be.service.AccountService;
 import com.example.casemodun6_be.service.DeatailAccountService;
 import com.example.casemodun6_be.service.JwtService;
-import com.example.casemodun6_be.service.SendMailService;
+//import com.example.casemodun6_be.service.SendMailService;
 import com.example.casemodun6_be.service.search.IAccountServiceSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,13 +27,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import javax.management.relation.Role;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @RestController
@@ -48,6 +45,7 @@ public class AccountAPI {
 
     @Autowired
     DetailAccountRepo detailAccountRepo;
+
     @Autowired
     DeatailAccountService detailAccount;
 
@@ -62,8 +60,9 @@ public class AccountAPI {
 
     @Autowired
     RolesRepo rolesRepo;
-    @Autowired
-    SendMailService sendMailService;
+//    @Autowired
+//    SendMailService sendMailService;
+
 
 
     @PostMapping("/login")
@@ -74,10 +73,13 @@ public class AccountAPI {
 
             String token = jwtService.createToken(authentication);
             Account account1 = accountService.findByName(account.getUsername());
-            UserToken userToken = new UserToken(account1.getUsername(), token, account1.getDetailAccount().getRoles(), account1.getDetailAccount().getImg(), account1.getStatus());
-            return new ResponseEntity<>(userToken, HttpStatus.OK);
+            UserToken userToken = new UserToken(account1.getId(),account1.getUsername(), token, account1.getDetailAccount().getRoles(), account1.getDetailAccount().getImg(), account1.getStatus());
+            if (userToken.getStatus() == 0){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(userToken   , HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -158,8 +160,7 @@ public class AccountAPI {
         if (checkMail && checkUserName) {
             detailAccount1.setGender(signUpForm.getGender());
             detailAccount1.setBirthday(signUpForm.getBirthday());
-            detailAccount1.setJoinDate(LocalDate.now());
-
+            detailAccount1.setJoinDate(LocalDateTime.now());
             List<Roles> roles = new ArrayList<>();
             roles.add(rolesRepo.findById(2L).get());
             detailAccount1.setRoles(roles);
@@ -188,6 +189,7 @@ public class AccountAPI {
         return new ResponseEntity<>(detailAccountList, HttpStatus.OK);
     }
 
+
     @GetMapping("/detailAccount")
     public ResponseEntity<DetailAccount> detailAccount() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -210,5 +212,6 @@ public class AccountAPI {
         }
         return new ResponseEntity<>(genderDTOS, HttpStatus.OK);
     }
+
 
 }

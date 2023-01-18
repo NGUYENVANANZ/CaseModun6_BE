@@ -56,4 +56,5 @@ public class Employ {
     public void setHires(long hires) {
         this.hires = hires;
     }
+
 }
