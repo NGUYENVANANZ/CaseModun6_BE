@@ -160,6 +160,9 @@ public class DeatailAccountService {
                     detailAccount.setFullName(d.getFullName());
                     detailAccount.setMota(d.getMoTa());
                     detailAccount.setImg(d.getImg());
+                    detailAccount.setGender(d.getGender());
+                    detailAccount.setBirthday(d.getBirthday());
+                    detailAccount.setCity(d.getCity());
                     List<Provided> provideds = provideds(d.getProvideds());
                     detailAccount.setProvideds(provideds);
                     detailAccount.setPrice(d.getPricePerDay());
